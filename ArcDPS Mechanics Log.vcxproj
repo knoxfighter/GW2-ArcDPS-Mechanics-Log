@@ -22,7 +22,7 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{C6CEE90B-2BA5-48AB-A322-02C2B2F7D54F}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -77,7 +77,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>d3d9_arcdps_mechanics</TargetName>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <SourcePath>E:\My Documents\Guild Wars 2\ArcDPS Mechanics Log\ArcDPS Mechanics Log\src;$(SourcePath)</SourcePath>
+    <SourcePath>$(SourcePath)</SourcePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,13 +110,13 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PostBuildEvent>
-      <Command>CertUtil -hashfile "$(TargetPath)" MD5|find /v "MD5 hash of"|find /v "CertUtil" &gt; "$(TargetPath).md5sum"
+      <Command>CertUtil -hashfile "$(TargetPath)" MD5 | find /i /v "md5" | find /i /v "certutil" &gt; "$(TargetPath).md5sum"
 copy /Y "$(TargetPath)" "C:\Program Files\Guild Wars 2\bin64\$(TargetFileName)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PostBuildEvent>
-      <Command>CertUtil -hashfile "$(TargetPath)" MD5|find /v "MD5 hash of"|find /v "CertUtil" &gt; "$(TargetPath).md5sum"
+      <Command>CertUtil -hashfile "$(TargetPath)" MD5 | find /i /v "md5" | find /i /v "certutil" &gt; "$(TargetPath).md5sum"
 copy /Y "$(TargetPath)" "C:\Program Files\Guild Wars 2\bin64\$(TargetFileName)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
