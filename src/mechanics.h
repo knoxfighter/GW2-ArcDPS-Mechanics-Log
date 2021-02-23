@@ -29,32 +29,38 @@ enum TargetLocation
 
 struct Mechanic
 {
-    std::string name = ""; //name of mechanic
-    std::string name_internal = ""; //name of skill in skilldef
-    std::string name_chart = ""; //name in chart (boss name - mechanic name)
-    std::string name_ini = ""; //name used for ini saving
+	std::string name = ""; //name of mechanic
+	std::string name_internal = ""; //name of skill in skilldef
+	std::string name_chart = ""; //name in chart (boss name - mechanic name)
+	std::string name_ini = ""; //name used for ini saving
 	std::string description = ""; //detailed description of what the mechanic is
 	uint32_t ids[max_ids_per_mechanic] = { 0 }; //skill ids;
 	size_t ids_size = 0;
-    Boss* boss = &boss_generic;//required boss, ignored if null
-    uint64_t frequency_player = 2000; //minimum time between instances of this mechanic per player(ms)
-    uint64_t frequency_global = 0; //minimum time between instances of this mechanic globally(ms)
-    uint64_t last_hit_time = 0; //time of last instance of mechanic
-	uint8_t is_activation = ACTV_NONE;
-	uint8_t is_buffremove = CBTB_NONE;
-	int32_t overstack_value = -1;//required overstack value
-	int32_t value = -1;//required value
-    bool is_interupt = false;
-    bool is_multihit = true;
-    bool target_is_dst = true;
-    bool fail_if_hit = true;
-    bool valid_if_down = false; //mechanic counts if player is in down-state
+	Boss* boss = &boss_generic;//required boss, ignored if null
+	uint64_t frequency_player = 2000; //minimum time between instances of this mechanic per player(ms)
+	uint64_t frequency_global = 0; //minimum time between instances of this mechanic globally(ms)
+	uint64_t last_hit_time = 0; //time of last instance of mechanic
+	uint8_t is_activation = ACTV_NONE;//required is_activation type from cbtevent
+	uint8_t is_buffremove = CBTB_NONE;//required is_buffremove type from cbtevent
+	int32_t overstack_value = -1;//required overstack value, -1 means accept any value
+	int32_t value = -1;//required value, -1 means accept any value
+	bool is_interupt = false;//mechanic is ignored if player has stability
+	bool is_multihit = true;//mechanic is listed once if it hits multiple times within [frequency_player] ms
+	bool target_is_dst = true;//relevant player for mechanic is the destination of cbtevent (setting this to false makes the relevant player the source of cbtevent)
+	bool fail_if_hit = true;//mechanic is "failed" if hit (setting this to false makes it neutral in chart)
+	bool valid_if_down = false;//mechanic counts if player is in down-state
 
+	/*
+	If the attack is successfully evaded/blocked/invulned, arcdps will say such.
+	If the attack cannot actually be evaded/blocked/invulned, such a combat event will never happen and it won't matter.
+	The following flags are for mechanics where you can avoid the damage, but still cause something bad.
+	These flags should be true by default unless a mechanic is quite special.
+	*/
 	bool can_evade = true;
 	bool can_block = true;
 	bool can_invuln = true;
 
-	int verbosity = verbosity_all;
+	int verbosity = verbosity_all;//if mechanic should be displayed in the log, chart, or everywhere
 
 	Mechanic() noexcept;
 	Mechanic(std::string new_name, std::initializer_list<uint32_t> new_ids, Boss* new_boss, bool new_fail_if_hit, bool new_valid_if_down, int new_verbosity,

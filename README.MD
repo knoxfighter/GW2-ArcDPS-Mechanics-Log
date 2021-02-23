@@ -1,3 +1,5 @@
+# [Click Here to Download](/../../releases)
+
 # Overview
 MarsEdge has been working on a plugin for ArcDPS using its realtime combat api. The plugin shows a realtime list of failed mechanics for players. The mechanics are determined by the skill id of the attack a player/npc is hit by. It shows a timestamp in ‘min:sec’ since entering combat and ‘X was hit by Y mechanic’.
 
