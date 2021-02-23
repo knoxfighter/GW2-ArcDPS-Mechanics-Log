@@ -1,5 +1,7 @@
+# [Click Here to Download](/../../releases)
+
 # Overview
-I’ve been working on a plugin for ArcDPS using its realtime combat api. The plugin shows a realtime list of failed mechanics for players. The mechanics are determined by the skill id of the attack a player/npc is hit by. It shows a timestamp in ‘min:sec’ since entering combat and ‘X was hit by Y mechanic’.
+MarsEdge has been working on a plugin for ArcDPS using its realtime combat api. The plugin shows a realtime list of failed mechanics for players. The mechanics are determined by the skill id of the attack a player/npc is hit by. It shows a timestamp in ‘min:sec’ since entering combat and ‘X was hit by Y mechanic’.
 
 This plugin is not intended to breed toxicity, but instead help show players mechanical areas where the players can improve. This is in the same way that arcdps shows how dps/boons could be improved.
 
@@ -10,7 +12,9 @@ Here are some example screenshots (with names redacted):
 ![chart](https://i.imgur.com/dcP57iR.png)
 
 [(I use a custom arcdps font found here)](https://mega.nz/#!ck5kVL7I!T1Llgtnz5H6jRCnHWcCa0D5kJoqgE_0rudvscyDUT8I)
-# It currently detects:
+# Currently detected mechanics
+<details><summary>Show list</summary>
+<p>
 
 - Vale Guardian
   - teleport
@@ -141,10 +145,36 @@ Here are some example screenshots (with names redacted):
       - cone knockback
       - getting a bomb
       - getting a green circle
+- Strike Missions
+  - Boneskinner
+    - Charge
+    - Death Wind
+  - Fraenir
+    - Icequake
+    - Ice Shock Wave
+    - Freeze
+  - Kodan Brothers
+    - Trap
+  - Whisper of Jormag
+    - Chains
+    - Hit by Chains
+    - Preading ice
+    - Icy Slice
+    - Tornado
+  - Icebrood Construct
+    - Shock Wave
+    - Deadly Shockwave
+    - Arm Swing
+    - Ice Crystal
+    - Flail
+    - Ice Shatter
+  
+</p>
+</details>
 
-If you have any ideas for things I’m missing, please let me know.
+If you have any ideas for things I’m missing, please let me know, preferably through github.
 
-I have no current interest in mechanics detection for PvP / WvW. I’m not even sure what kind of things would be useful to show from those game modes. I don’t PvP / WvW much myself.
+I have no current interest in mechanics detection for PvP / WvW. I’m not even sure what kind of things would be useful to show from those game modes.
 
 # Installation:
 
@@ -154,7 +184,7 @@ Put the .dll file in the same folder as arcdps (Program Files/Guild Wars 2/bin64
 
 To disable, just remove the .dll or move it to a different folder.
 
-This plugin shouldn’t need to be updated with Guild Wars 2 updates, but arcdps must be compatible with Guild Wars 2.
+This plugin shouldn’t need to be updated with Guild Wars 2 updates, but arcdps must be compatible with Guild Wars 2. It does need to be updated for new encounters / abilities.
 
 If arcdps updates the combat api, this plugin might need to be updated for compatibility.
 
@@ -206,7 +236,7 @@ Some mechanics are not necessarily the hit player’s fault. If 1 sub-group gets
 
 Q: Is it Terms of Service compliant?
 
-A: Yes. I’ve talked to Chris Cleary from Anet and he did not see any issues with compliance. ([part1](https://i.imgur.com/hwAe5L9.png) [part2](https://i.imgur.com/pnLhxQd.png))
+A: Yes. MarsEdge has talked to Chris Cleary from Anet and he did not see any issues with compliance. ([part1](https://i.imgur.com/hwAe5L9.png) [part2](https://i.imgur.com/pnLhxQd.png))
 
 # Known Issues:
 
@@ -214,12 +244,15 @@ If a player has a magnetic aura, reflecting distortion, etc and reflects a shard
 
 The chart will track downs/deaths of players in open-world PvE / WvW squads. This can get spammy. For now, I recommend clearing the chart before starting instanced content to avoid the clutter.
 
-Send bug reports, feedback, hate mail, etc to ‘MarsEdge’ on reddit or ‘MarsEdge.8241’ (ingame)
+Send bug reports, feedback, hate mail, etc through github.
 # Special thanks to:
 - deltaconnected for arcdps and the combat api
 - [KA] Karma and Omg Its Kayla.6479 for testing, feedback, and encouragement
+- MarsEdge for creating this tool
 
-# Changelog:
+# Original Changelog:
+<details><summary>Show changelog</summary>
+<p>
 
     July 9 2019
         Fix Arkk green/bomb mechanics not being tracked if player is downed
@@ -558,3 +591,5 @@ Send bug reports, feedback, hate mail, etc to ‘MarsEdge’ on reddit or ‘Mar
         Added Sabetha sapper bomb, time bomb detection (this will currently be a bit spammy at Bandit Trio and during trash clearing)
     October 4 2017
         Initial release
+</p>
+</details>
