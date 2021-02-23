@@ -7,64 +7,78 @@
 #include "arcdps_datastructures.h"
 #include "player.h"
 #include "skill_ids.h"
-#include "npc_ids.h"
+#include "bosses.h"
 #include "helpers.h"
 
 extern bool has_logged_mechanic;
 
 const unsigned int max_ids_per_mechanic = 10;
 
-enum Verbosity
+enum class Verbosity : int
 {
-	verbosity_chart = 1 << 0,
-	verbosity_log = 1 << 1,
-	verbosity_all = (verbosity_chart | verbosity_log),
+	None = 0,
+	Chart = 1 << 0,
+	Log = 1 << 1,
+	All = (Chart | Log),
 };
 
-enum TargetLocation
+enum class TargetLocation : bool
 {
-	target_location_src,
-	target_location_dst,
+	Source = false,
+	Destination = true,
 };
 
 struct Mechanic
 {
-    std::string name = ""; //name of mechanic
-    std::string name_internal = ""; //name of skill in skilldef
-    std::string name_chart = ""; //name in chart (boss name - mechanic name)
-    std::string name_ini = ""; //name used for ini saving
-	std::string description = ""; //detailed description of what the mechanic is
-	uint32_t ids[max_ids_per_mechanic] = { 0 }; //skill ids;
-	size_t ids_size = 0;
-    Boss* boss = &boss_generic;//required boss, ignored if null
-    uint64_t frequency_player = 2000; //minimum time between instances of this mechanic per player(ms)
-    uint64_t frequency_global = 0; //minimum time between instances of this mechanic globally(ms)
-    uint64_t last_hit_time = 0; //time of last instance of mechanic
-	uint8_t is_activation = ACTV_NONE;
-	uint8_t is_buffremove = CBTB_NONE;
-	int32_t overstack_value = -1;//required overstack value
-	int32_t value = -1;//required value
-    bool is_interupt = false;
-    bool is_multihit = true;
-    bool target_is_dst = true;
-    bool fail_if_hit = true;
-    bool valid_if_down = false; //mechanic counts if player is in down-state
+    std::string name; //name of mechanic
+    std::string name_internal; //name of skill in skilldef
+    std::string name_chart; //name in chart (boss name - mechanic name)
+    std::string name_ini; //name used for ini saving
+	std::string description; //detailed description of what the mechanic is
+	uint32_t ids[max_ids_per_mechanic]; //skill ids;
+	size_t ids_size;
+    Boss* boss;//required boss, ignored if null
+    uint64_t frequency_player; //minimum time between instances of this mechanic per player(ms)
+    uint64_t frequency_global; //minimum time between instances of this mechanic globally(ms)
+    uint64_t last_hit_time; //time of last instance of mechanic
+	uint8_t is_activation;
+	uint8_t is_buffremove;
+	int32_t overstack_value;//required overstack value
+	int32_t value;//required value
+    bool is_interupt;
+    bool is_multihit;
+	TargetLocation target_is_dst;
+    bool fail_if_hit;
+    bool valid_if_down; //mechanic counts if player is in down-state
 
-	bool can_evade = true;
-	bool can_block = true;
-	bool can_invuln = true;
+	bool can_evade;
+	bool can_block;
+	bool can_invuln;
 
-	int verbosity = verbosity_all;
+	Verbosity verbosity;
 
-	Mechanic() noexcept;
-	Mechanic(std::string new_name, std::initializer_list<uint32_t> new_ids, Boss* new_boss, bool new_fail_if_hit, bool new_valid_if_down, int new_verbosity,
-		bool new_is_interupt, bool new_is_multihit, int new_target_location,
-		uint64_t new_frequency_player, uint64_t new_frequency_global, int32_t new_overstack_value, int32_t new_value,
-		uint8_t new_is_activation, uint8_t new_is_buffremove,
-		bool new_can_evade, bool new_can_block, bool new_can_invuln,
+	::Mechanic(Boss* new_boss,
+		std::string new_name,
+		std::initializer_list<uint32_t> new_ids,
+		std::string new_description,
+		bool new_fail_if_hit,
+		bool new_is_interupt,
+		bool new_is_multihit,
+		TargetLocation new_target_location,
+		uint64_t new_frequency_player,
+		uint64_t new_frequency_global,
+		uint8_t new_is_activation,
+		uint8_t new_is_buffremove,
+		bool new_can_evade,
+		bool new_can_block,
+		bool new_can_invuln,
 		bool(*new_special_requirement)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player),
 		int64_t(*new_special_value)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player),
-			std::string new_name_internal, std::string new_description);
+		std::string new_name_internal,
+		bool new_valid_if_down,
+		int32_t new_overstack_value,
+		int32_t new_value,
+		Verbosity new_verbosity);
 
 	int64_t isValidHit(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst);
 
@@ -87,13 +101,13 @@ struct Mechanic
 	Mechanic setValue(int32_t const new_value) { this->value = new_value; return *this; }
     Mechanic setIsInterupt(bool const new_is_interupt) {this->is_interupt = new_is_interupt; return *this;}
     Mechanic setIsMultihit(bool const new_is_multihit) {this->is_multihit = new_is_multihit; return *this;}
-    Mechanic setTargetIsDst(bool const new_target_is_dst) {this->target_is_dst = new_target_is_dst; return *this;}
+    Mechanic setTargetIsDst(TargetLocation const new_target_is_dst) {this->target_is_dst = new_target_is_dst; return *this;}
     Mechanic setFailIfHit(bool const new_fail_if_hit) {this->fail_if_hit = new_fail_if_hit; return *this;}
     Mechanic setValidIfDown(bool const new_valid_if_down) {this->valid_if_down = new_valid_if_down; return *this;}
 	Mechanic setCanEvade(bool const new_can_evade) { this->can_evade = new_can_evade; return *this; }
 	Mechanic setCanBlock(bool const new_can_block) { this->can_block = new_can_block; return *this; }
 	Mechanic setCanInvuln(bool const new_can_invuln) { this->can_invuln = new_can_invuln; return *this; }
-	Mechanic setVerbosity(int const new_verbosity) { this->verbosity = new_verbosity; return *this; }
+	Mechanic setVerbosity(Verbosity const new_verbosity) { this->verbosity = new_verbosity; return *this; }
 
     Mechanic setSpecialRequirement(bool (*new_special_requirement)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)) {this->special_requirement = new_special_requirement; return *this;}
     Mechanic setSpecialReturnValue(int64_t(*new_special_value)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)) {this->special_value = new_special_value; return *this;}

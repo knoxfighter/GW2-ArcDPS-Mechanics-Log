@@ -50,7 +50,7 @@
     <ClCompile Include="src\mechanics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\npc_ids.cpp">
+    <ClCompile Include="src\bosses.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\player.cpp">
@@ -106,7 +106,7 @@
     <ClInclude Include="src\mechanics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\npc_ids.h">
+    <ClInclude Include="src\bosses.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\player.h">

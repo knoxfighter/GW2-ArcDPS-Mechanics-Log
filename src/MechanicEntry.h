@@ -5,7 +5,7 @@
 
 #include "mechanics.h"
 #include "player.h"
-#include "npc_ids.h"
+#include "bosses.h"
 
 class MechanicEntry
 {

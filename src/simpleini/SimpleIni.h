@@ -1359,7 +1359,7 @@ CSimpleIniTempl<SI_CHAR,SI_STRLESS,SI_CONVERTER>::LoadFile(
     }
     
     // allocate and ensure NULL terminated
-    char * pData = new char[lSize+1];
+    char * pData = new char[lSize+1l];
     if (!pData) {
         return SI_NOMEM;
     }

@@ -14,7 +14,7 @@ public:
 	uint64_t health = 0;
 	uint16_t pulls = 0;
 
-	Boss();
+	Boss::Boss(std::string const p_name, std::vector<uint32_t> p_ids, int64_t p_timer, uint64_t p_health);
 
 	bool hasId(uint32_t new_id);
 

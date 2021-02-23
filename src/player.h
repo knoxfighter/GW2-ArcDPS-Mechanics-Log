@@ -6,7 +6,7 @@
 #include <vector>
 #include <mutex>
 #include "arcdps_datastructures.h"
-#include "npc_ids.h"
+#include "bosses.h"
 
 struct Player
 {
