@@ -70,14 +70,16 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+ <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <TargetName>d3d9_arcdps_mechanics</TargetName>
-    <SourcePath>E:\My Documents\Guild Wars 2\ArcDPS Mechanics Log\ArcDPS Mechanics Log\src;$(SourcePath)</SourcePath>
+    <SourcePath>$(SourcePath)</SourcePath>
+    <OutDir>E:\Spiele\Guild Wars 2\bin64\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <TargetName>d3d9_arcdps_mechanics</TargetName>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <SourcePath>E:\My Documents\Guild Wars 2\ArcDPS Mechanics Log\ArcDPS Mechanics Log\src;$(SourcePath)</SourcePath>
+    <SourcePath>$(SourcePath)</SourcePath>
+    <OutDir>E:\Spiele\Guild Wars 2\bin64\</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,15 +112,21 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PostBuildEvent>
-      <Command>CertUtil -hashfile "$(TargetPath)" MD5|find /v "MD5 hash of"|find /v `"CertUtil`" &gt; "$(TargetPath).md5sum"
-copy /Y "$(TargetPath)" "E:\Spiele\Guild Wars 2\bin64\$(TargetFileName)"</Command>
+      <Command>powershell -noprofile -command  "(Get-FileHash '$(OutDirFullPath)$(TargetFileName)').Hash  &gt; '$(OutDirFullPath)$(TargetName).sha'"</Command>
     </PostBuildEvent>
+    <ClCompile>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PostBuildEvent>
-      <Command>CertUtil -hashfile "$(TargetPath)" MD5|find /v "MD5 hash of"|find /v "CertUtil" &gt; "$(TargetPath).md5sum"
-copy /Y "$(TargetPath)" "C:\Program Files\Guild Wars 2\bin64\$(TargetFileName)"</Command>
+      <Command>powershell -noprofile -command  "(Get-FileHash '$(OutDirFullPath)$(TargetFileName)').Hash  &gt; '$(OutDirFullPath)$(TargetName).sha'"</Command>
     </PostBuildEvent>
+    <ClCompile>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="bin\debug\libd3d9_arcdps_mechanics.def" />
@@ -131,9 +139,11 @@ copy /Y "$(TargetPath)" "C:\Program Files\Guild Wars 2\bin64\$(TargetFileName)"<
     </ClCompile>
     <ClCompile Include="src\arcdps_mechanicslog.cpp" />
     <ClCompile Include="src\helpers.cpp" />
-    <ClCompile Include="src\imgui.cpp" />
-    <ClCompile Include="src\imgui_demo.cpp" />
-    <ClCompile Include="src\imgui_draw.cpp" />
+    <ClCompile Include="src\imgui\imgui.cpp" />
+    <ClCompile Include="src\imgui\imgui_demo.cpp" />
+    <ClCompile Include="src\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\imgui\imgui_tables.cpp" />
+    <ClCompile Include="src\imgui\imgui_widgets.cpp" />
     <ClCompile Include="src\imgui_panels.cpp" />
     <ClCompile Include="src\LogEvent.cpp" />
     <ClCompile Include="src\MechanicEntry.cpp" />
@@ -143,26 +153,18 @@ copy /Y "$(TargetPath)" "C:\Program Files\Guild Wars 2\bin64\$(TargetFileName)"<
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\PlayerEntry.cpp" />
     <ClCompile Include="src\simpleini\ConvertUTF.c" />
-    <ClCompile Include="src\simpleini\snippets.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\simpleini\test1.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="src\simpleini\testsi.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="src\Tracker.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\arcdps_datastructures.h" />
     <ClInclude Include="src\helpers.h" />
-    <ClInclude Include="src\imconfig.h" />
-    <ClInclude Include="src\imgui.h" />
-    <ClInclude Include="src\imgui_internal.h" />
+    <ClInclude Include="src\imgui\imconfig.h" />
+    <ClInclude Include="src\imgui\imgui.h" />
+    <ClInclude Include="src\imgui\imgui_internal.h" />
+    <ClInclude Include="src\imgui\imstb_rectpack.h" />
+    <ClInclude Include="src\imgui\imstb_textedit.h" />
+    <ClInclude Include="src\imgui\imstb_truetype.h" />
     <ClInclude Include="src\imgui_panels.h" />
     <ClInclude Include="src\LogEvent.h" />
     <ClInclude Include="src\MechanicEntry.h" />
@@ -174,10 +176,10 @@ copy /Y "$(TargetPath)" "C:\Program Files\Guild Wars 2\bin64\$(TargetFileName)"<
     <ClInclude Include="src\simpleini\ConvertUTF.h" />
     <ClInclude Include="src\simpleini\SimpleIni.h" />
     <ClInclude Include="src\skill_ids.h" />
-    <ClInclude Include="src\stb_rect_pack.h" />
-    <ClInclude Include="src\stb_textedit.h" />
-    <ClInclude Include="src\stb_truetype.h" />
     <ClInclude Include="src\Tracker.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ArcDPS Mechanics Log.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -59,13 +59,15 @@ Boss boss_ensolyss = Boss("Ensolyss of the Endless Torment", { 0x4234 }, 1405989
 Boss boss_skorvald = Boss("Skorvald the Shattered", { 0x44E0 }, 5551340);//TODO get normal mode id
 Boss boss_artsariiv = Boss("Artsariiv", { 0x461D }, 5962266);//TODO get normal mode id
 Boss boss_arkk = Boss("Arkk", { 0x455F }, 9942250);//TODO get normal mode id
+Boss boss_ai = Boss("Sorrowful Spellcaster", { 23254 }, 0, 14905666); //TODO: get timer
 
 Boss boss_strike_generic = Boss("Strike Generic");
-Boss boss_boneskinner = Boss("Boneskinner", { 22521 });//TODO get timer & health
-Boss boss_fraenir = Boss("Fraenir", { 22492 });//TODO get timer & health
-Boss boss_kodan = Boss("Kodan Brothers", { 22343, 22481, 22315 });//TODO get timer & health
-Boss boss_whisper = Boss("Whisper of Jormag", { 22711 });//TODO get timer & health
-Boss boss_icebrood_construct = Boss("Icebrood Construct", { 22154, 22436 });//TODO get timer & health
+Boss boss_boneskinner = Boss("Boneskinner", { 22521 }, 10 * 60 * 1000, 12387060);
+Boss boss_fraenir = Boss("Fraenir", { 22492 }, 10 * 60 * 1000, 12387060);
+Boss boss_kodan = Boss("Kodan Brothers", { 22343, 22481, 22315 }, 10 * 60 * 1000, 8258040);
+Boss boss_whisper = Boss("Whisper of Jormag", { 22711 }, 10 * 60 * 1000, 24774120);
+Boss boss_icebrood_construct = Boss("Icebrood Construct", { 22154, 22436 }, 12 * 60 * 1000, 11698890);
+Boss boss_coldwar = Boss("Varinia Stormsounder", { 22836 }, 7 * 60 * 1000, 17892420);
 
 std::list<Boss*> bosses =
 {

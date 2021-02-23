@@ -1,10 +1,15 @@
 #include "imgui_panels.h"
 
-void    AppLog::draw(const char* title, bool* p_open, ImGuiWindowFlags flags, Tracker* tracker)
+#include <Windows.h>
+#include <ctime>
+#include <fstream>
+#include <ShlObj.h>
+
+void AppLog::draw(const char* title, bool* p_open, ImGuiWindowFlags flags, Tracker* tracker)
 {
-    ImGui::SetNextWindowSize(ImVec2(500,400), ImGuiSetCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(500,400), ImGuiCond_FirstUseEver);
 	ImGui::Begin(title, p_open, flags);
-	ImGui::BeginChild("Buttons",ImVec2(0,ImGui::GetItemsLineHeightWithSpacing()));
+	ImGui::BeginChild("Buttons",ImVec2(0, ImGui::GetFrameHeightWithSpacing()));
 	if (ImGui::Button("Clear")) tracker->clearLog();;
     ImGui::SameLine();
     const bool copy = ImGui::Button("Copy");
@@ -43,7 +48,7 @@ void    AppLog::draw(const char* title, bool* p_open, ImGuiWindowFlags flags, Tr
 		if (!filter.passFilter(&*current_event)) continue;
 
 		if (!show_pull_separators && current_event->isPlaceholder()) continue;
-		if (previous_was_placeholder && current_event->isPlaceholder()) continue;//don't show multiple placeholders if nothing is between them
+		if (previous_was_placeholder && current_event->isPlaceholder()) continue; //don't show multiple placeholders if nothing is between them
 
 		if (!beginning
 			&& current_event->time_absolute > (last_mechanic_time + line_break_frequency))
@@ -66,16 +71,16 @@ void    AppLog::draw(const char* title, bool* p_open, ImGuiWindowFlags flags, Tr
     ImGui::End();
 }
 
-void    AppChart::clear(Tracker* tracker)
+void AppChart::clear(Tracker* tracker)
 {
 	if (!tracker) return;
 
 	tracker->resetAllPlayerStats();
 }
 
-void    AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWindowFlags flags, bool show_all)
+void AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWindowFlags flags, bool show_all)
 {
-    ImGui::SetNextWindowSize(ImVec2(500,400), ImGuiSetCond_FirstUseEver);
+    ImGui::SetNextWindowSize(ImVec2(500,400), ImGuiCond_FirstUseEver);
     ImGui::Begin(title, p_open, flags);
 
     const float window_width = ImGui::GetWindowContentRegionWidth();
@@ -135,7 +140,7 @@ void    AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiW
 			continue;
 
 		ImGui::Separator();
-        ImGui::AlignFirstTextHeightToWidgets();
+        ImGui::GetFrameHeightWithSpacing();
         ImGui::Text(current_player->name_account_combo.c_str());
 
 		for (auto current_player_mechanics = current_entry->entries.begin(); current_player_mechanics != current_entry->entries.end(); ++current_player_mechanics)
@@ -271,7 +276,7 @@ std::string AppChart::getDefaultExportPath()
 
 void AppOptions::draw(Tracker* tracker, const char * title, bool * p_open, ImGuiWindowFlags flags)
 {
-	ImGui::SetNextWindowSize(ImVec2(550, 650), ImGuiSetCond_FirstUseEver);
+	ImGui::SetNextWindowSize(ImVec2(550, 650), ImGuiCond_FirstUseEver);
 	ImGui::Begin(title, p_open, flags);
 	
 	ImGui::Checkbox("Only show mechanics for self", &tracker->show_only_self);
