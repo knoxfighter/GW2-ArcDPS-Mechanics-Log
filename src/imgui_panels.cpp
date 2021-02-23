@@ -131,7 +131,7 @@ void    AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiW
 			&& tracker->show_only_self)
 			continue;
 
-		if (!filter.passFilter(current_player,nullptr,nullptr,verbosity_all))
+		if (!filter.passFilter(current_player,nullptr,nullptr,Verbosity::All))
 			continue;
 
 		ImGui::Separator();
@@ -142,7 +142,7 @@ void    AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiW
         {
 			if (!current_player_mechanics->isRelevant()) continue;
 			if (!current_player_mechanics->mechanic) continue;
-			if (!filter.passFilter(current_player, nullptr, current_player_mechanics->mechanic,verbosity_chart)) continue;
+			if (!filter.passFilter(current_player, nullptr, current_player_mechanics->mechanic,Verbosity::Chart)) continue;
 
             ImGui::Indent();
             ImGui::Text(current_player_mechanics->mechanic->getChartName().c_str());
@@ -293,7 +293,9 @@ void AppOptions::draw(Tracker* tracker, const char * title, bool * p_open, ImGui
 		if(previous_boss && previous_boss != current_mechanic->boss)
 			ImGui::Separator();
 
-		ImGui::Combo(current_mechanic->getChartName().c_str(), &current_mechanic->verbosity,
+		int verbosity = (int)current_mechanic->verbosity;
+
+		ImGui::Combo(current_mechanic->getChartName().c_str(), &verbosity,
 			"Hidden\0"
 			"Chart Only\0"
 			"Log only\0"

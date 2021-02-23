@@ -110,8 +110,8 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PostBuildEvent>
-      <Command>CertUtil -hashfile "$(TargetPath)" MD5|find /v "MD5 hash of"|find /v "CertUtil" &gt; "$(TargetPath).md5sum"
-copy /Y "$(TargetPath)" "C:\Program Files\Guild Wars 2\bin64\$(TargetFileName)"</Command>
+      <Command>CertUtil -hashfile "$(TargetPath)" MD5|find /v "MD5 hash of"|find /v `"CertUtil`" &gt; "$(TargetPath).md5sum"
+copy /Y "$(TargetPath)" "E:\Spiele\Guild Wars 2\bin64\$(TargetFileName)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -139,7 +139,7 @@ copy /Y "$(TargetPath)" "C:\Program Files\Guild Wars 2\bin64\$(TargetFileName)"<
     <ClCompile Include="src\MechanicEntry.cpp" />
     <ClCompile Include="src\MechanicFilter.cpp" />
     <ClCompile Include="src\mechanics.cpp" />
-    <ClCompile Include="src\npc_ids.cpp" />
+    <ClCompile Include="src\bosses.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\PlayerEntry.cpp" />
     <ClCompile Include="src\simpleini\ConvertUTF.c" />
@@ -168,7 +168,7 @@ copy /Y "$(TargetPath)" "C:\Program Files\Guild Wars 2\bin64\$(TargetFileName)"<
     <ClInclude Include="src\MechanicEntry.h" />
     <ClInclude Include="src\MechanicFilter.h" />
     <ClInclude Include="src\mechanics.h" />
-    <ClInclude Include="src\npc_ids.h" />
+    <ClInclude Include="src\bosses.h" />
     <ClInclude Include="src\player.h" />
     <ClInclude Include="src\PlayerEntry.h" />
     <ClInclude Include="src\simpleini\ConvertUTF.h" />

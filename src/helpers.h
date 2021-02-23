@@ -4,7 +4,7 @@
 #include <malloc.h>
 #include <cstdlib>
 #include "arcdps_datastructures.h"
-#include "npc_ids.h"
+#include "bosses.h"
 #include "imgui.h"
 
 #define __VERSION__ (__DATE__)

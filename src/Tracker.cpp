@@ -245,7 +245,7 @@ void Tracker::processMechanic(const cbtevent* ev, PlayerEntry* new_player_src, P
 {
 	std::lock_guard<std::mutex> lg(tracker_mtx);
 
-	PlayerEntry* relevant_entry = new_mechanic->target_is_dst ? new_player_dst : new_player_src;
+	PlayerEntry* relevant_entry = new_mechanic->target_is_dst == TargetLocation::Destination ? new_player_dst : new_player_src;
 
 	if (!relevant_entry) return;
 
