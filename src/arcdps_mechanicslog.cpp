@@ -1,33 +1,35 @@
 #include <Windows.h>
-#include <vector>
 #include <string>
-#include <algorithm>
-#include "simpleini\SimpleIni.h"
+#include <vector>
+#include <cstdint>
 
-#include "imgui.h"
-#include "imgui_panels.h"
 #include "arcdps_datastructures.h"
 #include "helpers.h"
 #include "bosses.h"
+#include "imgui_panels.h"
 #include "mechanics.h"
 #include "player.h"
 #include "skill_ids.h"
 #include "Tracker.h"
+#include "imgui/imgui.h"
+#include "simpleini\SimpleIni.h"
 
 /* proto/globals */
 arcdps_exports arc_exports;
 char* arcvers;
 void dll_init(HANDLE hModule);
 void dll_exit();
-extern "C" __declspec(dllexport) void* get_init_addr(char* arcversionstr, void* imguicontext);
+extern "C" __declspec(dllexport) void* get_init_addr(char* arcversionstr, ImGuiContext* imguicontext, void* id3dd9, HMODULE new_arcdll, void* mallocfn, void* freefn);
 extern "C" __declspec(dllexport) void* get_release_addr();
+
 arcdps_exports* mod_init();
 uintptr_t mod_release();
 uintptr_t mod_wnd(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t id, uint64_t revision);
 uintptr_t mod_imgui(uint32_t not_charsel_or_loading);
 uintptr_t mod_options();
-static int changeExportPath(ImGuiTextEditCallbackData const *data);
+
+static int changeExportPath(const ImGuiInputTextCallbackData* data);
 void readArcExports();
 void parseIni();
 void writeIni();
@@ -36,15 +38,15 @@ bool canMoveWindows();
 bool canClickWindows();
 
 typedef uint64_t(*arc_export_func_u64)();
-auto arc_dll = LoadLibraryA(TEXT("d3d9.dll"));
-auto arc_export_e6 = (arc_export_func_u64)GetProcAddress(arc_dll, "e6");
+HMODULE arc_dll;;
+arc_export_func_u64 arc_export_e6;
 bool arc_hide_all = false;
 bool arc_panel_always_draw = false;
 bool arc_movelock_altui = false;
 bool arc_clicklock_altui = false;
 bool arc_window_fastclose = false;
 
-auto arc_export_e7 = (arc_export_func_u64)GetProcAddress(arc_dll, "e7");
+arc_export_func_u64 arc_export_e7;
 DWORD arc_global_mod1 = 0;
 DWORD arc_global_mod2 = 0;
 DWORD arc_global_mod_multi = 0;
@@ -68,30 +70,18 @@ WPARAM chart_key;
 
 /* dll main -- winapi */
 BOOL APIENTRY DllMain(HANDLE hModule, DWORD ulReasonForCall, LPVOID lpReserved) {
-	switch (ulReasonForCall) {
-		case DLL_PROCESS_ATTACH: dll_init(hModule); break;
-		case DLL_PROCESS_DETACH: dll_exit(); break;
-
-		case DLL_THREAD_ATTACH:  break;
-		case DLL_THREAD_DETACH:  break;
-	}
-	return 1;
-}
-
-/* dll attach -- from winapi */
-void dll_init(HANDLE hModule) {
-	return;
-}
-
-/* dll detach -- from winapi */
-void dll_exit() {
-	return;
+	return TRUE;
 }
 
 /* export -- arcdps looks for this exported function and calls the address it returns */
-extern "C" __declspec(dllexport) void* get_init_addr(char* arcversionstr, void* imguicontext) {
+extern "C" __declspec(dllexport) void* get_init_addr(char* arcversionstr, ImGuiContext* imguicontext, void* id3dd9, HMODULE new_arcdll, void* mallocfn, void* freefn) {
 	arcvers = arcversionstr;
-	ImGui::SetCurrentContext((ImGuiContext*)imguicontext);
+	ImGui::SetCurrentContext(imguicontext);
+	ImGui::SetAllocatorFunctions(static_cast<void*(*)(size_t sz, void* user_data)>(mallocfn), static_cast<void(*)(void* ptr, void* user_data)>(freefn));
+
+	arc_dll = new_arcdll;
+	arc_export_e6 = (arc_export_func_u64)GetProcAddress(arc_dll, "e6");
+	arc_export_e7 = (arc_export_func_u64)GetProcAddress(arc_dll, "e7");
 	return mod_init;
 }
 
@@ -107,6 +97,7 @@ arcdps_exports* mod_init()
 	/* for arcdps */
 	memset(&arc_exports, 0, sizeof(arcdps_exports));
 	arc_exports.sig = 0x81004122;//from random.org
+	arc_exports.imguivers = IMGUI_VERSION_NUM;
 	arc_exports.size = sizeof(arcdps_exports);
 	arc_exports.out_name = "Mechanics Log";
 	arc_exports.out_build = __VERSION__;
@@ -137,41 +128,6 @@ uintptr_t mod_wnd(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	switch (uMsg)
 	{
 		case WM_KEYUP:
-		{
-			const int vkey = (int)wParam;
-			io->KeysDown[vkey] = 0;
-			if (vkey == VK_CONTROL)
-			{
-				io->KeyCtrl = false;
-			}
-			else if (vkey == VK_MENU)
-			{
-				io->KeyAlt = false;
-			}
-			else if (vkey == VK_SHIFT)
-			{
-				io->KeyShift = false;
-			}
-			break;
-		}
-		case WM_KEYDOWN:
-		{
-			const int vkey = (int)wParam;
-			io->KeysDown[vkey] = 1;
-			if (vkey == VK_CONTROL)
-			{
-				io->KeyCtrl = true;
-			}
-			else if (vkey == VK_MENU)
-			{
-				io->KeyAlt = true;
-			}
-			else if (vkey == VK_SHIFT)
-			{
-				io->KeyShift = true;
-			}
-			break;
-		}
 		case WM_SYSKEYUP:
 		{
 			const int vkey = (int)wParam;
@@ -190,6 +146,7 @@ uintptr_t mod_wnd(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 			break;
 		}
+		case WM_KEYDOWN:
 		case WM_SYSKEYDOWN:
 		{
 			const int vkey = (int)wParam;
@@ -217,7 +174,6 @@ uintptr_t mod_wnd(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 			}
 			break;
 		}
-		break;
 	}
 
 	if (io->KeysDown[arc_global_mod1] && io->KeysDown[arc_global_mod2])
@@ -438,7 +394,7 @@ uintptr_t mod_options()
     return 0;
 }
 
-static int changeExportPath(ImGuiTextEditCallbackData const *data)
+static int changeExportPath(const ImGuiInputTextCallbackData* data)
 {
 	chart_ui.export_dir = data->Buf;
 }
@@ -512,9 +468,6 @@ void parseIni()
 
 void writeIni()
 {
-
-	if (!valid_mechanics_ini) return;
-
 	SI_Error rc = mechanics_ini.SetValue("log", "show", std::to_string(show_app_log).c_str());
 	rc = mechanics_ini.SetValue("chart", "show", std::to_string(show_app_chart).c_str());
 	rc = mechanics_ini.SetValue("chart", "export_path", chart_ui.export_dir.c_str());

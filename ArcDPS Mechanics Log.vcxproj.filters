@@ -13,17 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
-    <Filter Include="Header Files\ImGui">
-      <UniqueIdentifier>{ff2c976b-9ffa-4ade-bc04-85d8b6b41971}</UniqueIdentifier>
+    <Filter Include="Source Files\imgui">
+      <UniqueIdentifier>{df596d8a-d2e3-4e23-abb0-014a2c7ace04}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ImGui">
-      <UniqueIdentifier>{65a8aca9-529a-4ae8-b7c7-379a9c64ce56}</UniqueIdentifier>
+    <Filter Include="Header Files\imgui">
+      <UniqueIdentifier>{1ef9a545-acb5-4b12-98d4-caed6256d0ba}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\SimpleIni">
-      <UniqueIdentifier>{9f298fc5-6569-4f94-a2c2-1faaf4a622c7}</UniqueIdentifier>
+    <Filter Include="Header Files\simpleini">
+      <UniqueIdentifier>{6f6874f9-b6de-4e53-bbd1-c2d63030969b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\SimpleInI">
-      <UniqueIdentifier>{2f6e4c8f-f61e-4d98-89b3-fcc4720874f7}</UniqueIdentifier>
+    <Filter Include="Source Files\simpleini">
+      <UniqueIdentifier>{3b21e6a5-7f0f-424b-8bf3-43ff93bb9d6a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -59,27 +59,6 @@
     <ClCompile Include="src\Tracker.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\imgui.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\imgui_demo.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\imgui_draw.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\simpleini\ConvertUTF.c">
-      <Filter>Source Files\SimpleInI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\simpleini\snippets.cpp">
-      <Filter>Source Files\SimpleInI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\simpleini\test1.cpp">
-      <Filter>Source Files\SimpleInI</Filter>
-    </ClCompile>
-    <ClCompile Include="src\simpleini\testsi.cpp">
-      <Filter>Source Files\SimpleInI</Filter>
-    </ClCompile>
     <ClCompile Include="src\LogEvent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -91,6 +70,24 @@
     </ClCompile>
     <ClCompile Include="src\MechanicFilter.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\imgui.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\imgui_demo.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\imgui_draw.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\imgui_tables.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui\imgui_widgets.cpp">
+      <Filter>Source Files\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\simpleini\ConvertUTF.c">
+      <Filter>Source Files\simpleini</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -118,30 +115,6 @@
     <ClInclude Include="src\Tracker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\imconfig.h">
-      <Filter>Header Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\imgui.h">
-      <Filter>Header Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\imgui_internal.h">
-      <Filter>Header Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stb_rect_pack.h">
-      <Filter>Header Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stb_textedit.h">
-      <Filter>Header Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\stb_truetype.h">
-      <Filter>Header Files\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\simpleini\SimpleIni.h">
-      <Filter>Header Files\SimpleIni</Filter>
-    </ClInclude>
-    <ClInclude Include="src\simpleini\ConvertUTF.h">
-      <Filter>Header Files\SimpleIni</Filter>
-    </ClInclude>
     <ClInclude Include="src\LogEvent.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -154,5 +127,37 @@
     <ClInclude Include="src\MechanicFilter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\imgui\imconfig.h">
+      <Filter>Header Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imgui\imgui.h">
+      <Filter>Header Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imgui\imgui_internal.h">
+      <Filter>Header Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imgui\imstb_rectpack.h">
+      <Filter>Header Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imgui\imstb_textedit.h">
+      <Filter>Header Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\imgui\imstb_truetype.h">
+      <Filter>Header Files\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\simpleini\ConvertUTF.h">
+      <Filter>Header Files\simpleini</Filter>
+    </ClInclude>
+    <ClInclude Include="src\simpleini\SimpleIni.h">
+      <Filter>Header Files\simpleini</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ArcDPS Mechanics Log.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

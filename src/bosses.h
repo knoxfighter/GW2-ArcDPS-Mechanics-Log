@@ -72,28 +72,25 @@ extern Boss boss_qadim2;
 //Fractals
 extern Boss boss_fotm_generic;
 
-//99 CM
+//Nightmare
 extern Boss boss_mama;
 extern Boss boss_siax;
 extern Boss boss_ensolyss;
 
-//100 CM
+//Shattered Observatory
 extern Boss boss_skorvald;
 extern Boss boss_artsariiv;
 extern Boss boss_arkk;
 
-//Strikes
-extern Boss boss_strike_generic;
+//Sunqua Peak
+extern Boss boss_ai;
 
-//Bjora
-extern Boss boss_boneskinner;
-extern Boss boss_fraenir;
-extern Boss boss_kodan;
-
-//Bjora2
-extern Boss boss_whisper;
-
-//Grothmar
+//Strike Missions
 extern Boss boss_icebrood_construct;
+extern Boss boss_voice_and_claw;
+extern Boss boss_fraenir;
+extern Boss boss_boneskinner;
+extern Boss boss_whisper;
+extern Boss boss_coldwar;
 
 extern std::list<Boss*> bosses;

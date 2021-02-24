@@ -1,15 +1,10 @@
 #pragma once
 
-#include "player.h"
-#include "imgui.h"
+#include <string>
+
 #include "Tracker.h"
 #include "MechanicFilter.h"
-#include "helpers.h"
-#include <string>
-#include <fstream>
-#include <windows.h>
-#include <shlobj.h>
-#include <ctime>
+#include "imgui/imgui.h"
 
 struct AppLog
 {

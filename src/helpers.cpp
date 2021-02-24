@@ -1,5 +1,7 @@
 #include "helpers.h"
 
+#include "imgui/imgui.h"
+
 bool isPlayer(const ag* new_player) noexcept
 {
 	return new_player

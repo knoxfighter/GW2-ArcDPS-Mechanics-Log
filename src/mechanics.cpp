@@ -2,8 +2,6 @@
 
 bool has_logged_mechanic = false;
 
-
-
 Mechanic::Mechanic(Boss* new_boss = &boss_generic, //TODO: should this be explicit?
 	std::string new_name = "",
 	std::initializer_list<uint32_t> new_ids = {},
@@ -169,7 +167,7 @@ bool Mechanic::operator==(Mechanic* other_mechanic)
 	return other_mechanic && ids[0] == other_mechanic->ids[0];
 }
 
-bool requirementDefault(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+bool requirementDefault(const ::Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	return true;
 }
@@ -420,10 +418,10 @@ std::vector<Mechanic>& getMechanics()
 			Mechanic(&boss_xera, "stood in an orb aoe", {MECHANIC_XERA_ORB_AOE}).setFrequencyPlayer(1000).setVerbosity(Verbosity::Chart),
 			Mechanic(&boss_xera, "was teleported", {MECHANIC_XERA_PORT}).setVerbosity(Verbosity::Chart),
 
-			Mechanic(&boss_cairn, "was teleported", {MECHANIC_CARIN_TELEPORT}),
-			Mechanic(&boss_cairn, "was slapped", {MECHANIC_CARIN_SWEEP}).setIsInterupt(true),
-			//Mechanic().setName("reflected shards").setIds({MECHANIC_CARIN_SHARD}).setTargetIsDst(false).setBoss(&boss_cairn),
-			Mechanic(&boss_cairn, "missed a green circle", {MECHANIC_CARIN_GREEN_A,MECHANIC_CARIN_GREEN_B,MECHANIC_CARIN_GREEN_C,MECHANIC_CARIN_GREEN_D,MECHANIC_CARIN_GREEN_E,MECHANIC_CARIN_GREEN_F}).setIsInterupt(true),
+			Mechanic(&boss_cairn, "was teleported", {MECHANIC_CAIRN_TELEPORT}),
+			Mechanic(&boss_cairn, "was slapped", {MECHANIC_CAIRN_SWEEP}).setIsInterupt(true),
+			//Mechanic().setName("reflected shards").setIds({MECHANIC_CAIRN_SHARD}).setTargetIsDst(false).setBoss(&boss_cairn),
+			Mechanic(&boss_cairn, "missed a green circle", {MECHANIC_CAIRN_GREEN_A,MECHANIC_CAIRN_GREEN_B,MECHANIC_CAIRN_GREEN_C,MECHANIC_CAIRN_GREEN_D,MECHANIC_CAIRN_GREEN_E,MECHANIC_CAIRN_GREEN_F}).setIsInterupt(true),
 
 			Mechanic(&boss_sam, "was shockwaved", {MECHANIC_SAM_SHOCKWAVE}).setIsInterupt(true),
 			Mechanic(&boss_sam, "was horizontally slapped", {MECHANIC_SAM_SLAP_HORIZONTAL}).setIsInterupt(true),
@@ -541,10 +539,36 @@ std::vector<Mechanic>& getMechanics()
 			//Mechanic().setName("didn't block the goop").setIds({MECHANIC_ARKK_GOOP}).setBoss(&boss_arkk).setCanEvade(false),
 
 
+			//Sorrowful Spellcaster
+			Mechanic(&boss_ai, "stood in red circle", {61463}, "Elemental Whirl").setIsMultihit(false),
+			//Wind
+			Mechanic(&boss_ai, "was hit by a windsphere", {61487,61565},"Fulgor Sphere"),
+			Mechanic(&boss_ai, "was hit by wind blades", {61574}, "Elemental Manipulation"),
+			//Mechanic("was launched in the air", {61205}, &boss_ai, false, false, verbosity_chart, false, false, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Wind Burst", ""),
+			//Mechanic("stood in wind", {61470}, & boss_ai, false, false, verbosity_chart, false, true, target_location_dst, 5000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Volatile Wind", ""),
+			//Mechanic("was hit by lightning", {61190}, &boss_ai, false, false, verbosity_chart, false, false, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Call of Storms", ""),
+			//Fire
+			Mechanic(&boss_ai, "was hit by a fireball", {61273,61582}, "Roiling Flames"),
+			//TODO: Mechanic("was hit by fire blades", {}, &boss_ai, false, false, verbosity_chart, false, false, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Elemental Manipulation", ""),
+			//Mechanic("stood in fire", {61548}, & boss_ai, false, false, verbosity_all, false, true, target_location_dst, 5000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Volatile Fire", ""),
+			Mechanic(&boss_ai, "was hit by a meteor", {61348,61439}, "Call Meteor"),
+			Mechanic(&boss_ai, "was hit by firestorm", {61445}, "Firestorm"),
+			//Water
+			Mechanic(&boss_ai, "was hit by a whirlpool", {61349,61177}, "Torrential Bolt"),
+			//TODO: Mechanic("was hit by water blades", {}, &boss_ai, false, false, verbosity_chart, false, false, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Elemental Manipulation", ""),
+			//Mechanic("stood in water", {61419}, & boss_ai, false, false, verbosity_all, false, true, target_location_dst, 5000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Volatile Waters", ""),
+			//Dark
+			Mechanic(&boss_ai, "was hit by a laser", {61344,61499}, "Focused Wrath"),
+			//TODO: Mechanic("was hit by a laser blade", {}, &boss_ai, false, false, verbosity_chart, false, false, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Empathic Manipulation", ""),
+			//TODO: Mechanic("was stunned by fear", {}, &boss_ai, false, false, verbosity_all, false, false, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "", ""),
+		
+
+
 			Mechanic(&boss_boneskinner, "was hit by charge", { MECHANIC_BONESKINNER_CHARGE }).setIsInterupt(true),
 			Mechanic(&boss_boneskinner, "was hit by Death Wind", { MECHANIC_BONESKINNER_DEATH_WIND }).setIsInterupt(true),
 
-			Mechanic(&boss_kodan, "was trapped", { MECHANIC_KODAN_TRAP }).setSpecialRequirement(requirementBuffApply),
+				//this should work, but computer says no
+			//Mechanic(&boss_kodan, "was trapped", { MECHANIC_KODAN_TRAP }).setSpecialRequirement(requirementBuffApply),
 
 			Mechanic(&boss_fraenir, "was hit by icequake", { MECHANIC_FRAENIR_ICEQUAKE }),
 			Mechanic(&boss_fraenir, "was hit by shock wave", { MECHANIC_FRAENIR_ICE_SHOCK_WAVE }),
@@ -557,6 +581,7 @@ std::vector<Mechanic>& getMechanics()
 			Mechanic(&boss_whisper, "was hit by ice tornado", { MECHANIC_WHISPER_ICE_TEMPEST }),
 			Mechanic(&boss_whisper, "has a chain", { MECHANIC_WHISPER_HAS_CHAINS }).setFailIfHit(false).setSpecialRequirement(requirementBuffApply),
 
+				//Icebrood Construct
 			Mechanic(&boss_icebrood_construct, "was hit by deadly shock wave", { MECHANIC_ICEBROOD_SHOCK_WAVE_DEADLY }),
 			Mechanic(&boss_icebrood_construct, "was hit by arm swing", { MECHANIC_ICEBROOD_ARM_SWING }),
 			Mechanic(&boss_icebrood_construct, "was hit by shock wave", { MECHANIC_ICEBROOD_SHOCK_WAVE_1, MECHANIC_ICEBROOD_SHOCK_WAVE_2, MECHANIC_ICEBROOD_SHOCK_WAVE_3 }),
@@ -564,6 +589,14 @@ std::vector<Mechanic>& getMechanics()
 			Mechanic(&boss_icebrood_construct, "was hit by crystal", { MECHANIC_ICEBROOD_CRYSTAL }),
 			Mechanic(&boss_icebrood_construct, "was hit by flail", { MECHANIC_ICEBROOD_FLAIL_1, MECHANIC_ICEBROOD_FLAIL_2 }),
 
-		};
+			//Cold War
+			//too many procs Mechanic("was hit by icy echoes", {60354}, &boss_coldwar, false, false, verbosity_chart, false, false, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Icy Echoes", ""), 
+			//not working Mechanic("was frozen", {60371}, &boss_coldwar, true, false, verbosity_all, false, false, target_location_dst, 2000, 0, -1, -1, ACTV_NONE, CBTB_NONE, true, true, true, requirementDefault, valueDefault, "Flash Freeze", ""), 
+			Mechanic(&boss_coldwar, "was hit by assassins", { 60308 }, "Call Assassins"),
+			Mechanic(&boss_coldwar, "stood in flames", {60171}, "Flame Wall"),
+			Mechanic(&boss_coldwar, "was run over", {60132}, "Charge!"),
+			Mechanic(&boss_coldwar, "was hit by detonation", {60006}, "Detonate"),
+			Mechanic(&boss_coldwar, "soaked damage", {60545}, "Lethal Coalescence").setFailIfHit(false),
+	};
 	return *mechanics;
 }

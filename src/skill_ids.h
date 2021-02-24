@@ -41,16 +41,16 @@ const uint32_t MECHANIC_XERA_MAGIC_BUFF = 35000;//Intervention
 const uint32_t MECHANIC_XERA_PORT = 34997;
 const uint32_t MECHANIC_XERA_PORT_RETURN = 35076;//Hero's Return
 
-//carin
-const uint32_t MECHANIC_CARIN_TELEPORT = 38113;//Displacement
-const uint32_t MECHANIC_CARIN_SHARD = 38313;//Meteor Swarm
-const uint32_t MECHANIC_CARIN_SWEEP = 37631;//Orbital Sweep
-const uint32_t MECHANIC_CARIN_GREEN_A = 37611;//Spatial Manipulation, 1 id per pattern of greens
-const uint32_t MECHANIC_CARIN_GREEN_B = 37629;//Spatial Manipulation
-const uint32_t MECHANIC_CARIN_GREEN_C = 37642;//Spatial Manipulation
-const uint32_t MECHANIC_CARIN_GREEN_D = 37673;//Spatial Manipulation
-const uint32_t MECHANIC_CARIN_GREEN_E = 38074;//Spatial Manipulation
-const uint32_t MECHANIC_CARIN_GREEN_F = 38302;//Spatial Manipulation
+//cairn
+const uint32_t MECHANIC_CAIRN_TELEPORT = 38113;//Displacement
+const uint32_t MECHANIC_CAIRN_SHARD = 38313;//Meteor Swarm
+const uint32_t MECHANIC_CAIRN_SWEEP = 37631;//Orbital Sweep
+const uint32_t MECHANIC_CAIRN_GREEN_A = 37611;//Spatial Manipulation, 1 id per pattern of greens
+const uint32_t MECHANIC_CAIRN_GREEN_B = 37629;//Spatial Manipulation
+const uint32_t MECHANIC_CAIRN_GREEN_C = 37642;//Spatial Manipulation
+const uint32_t MECHANIC_CAIRN_GREEN_D = 37673;//Spatial Manipulation
+const uint32_t MECHANIC_CAIRN_GREEN_E = 38074;//Spatial Manipulation
+const uint32_t MECHANIC_CAIRN_GREEN_F = 38302;//Spatial Manipulation
 
 //sam
 const uint32_t MECHANIC_SAM_SHOCKWAVE = 37996;

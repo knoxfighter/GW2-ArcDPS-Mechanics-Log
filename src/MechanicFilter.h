@@ -1,9 +1,7 @@
 #pragma once
 
-#include "imgui.h"
-#include "PlayerEntry.h"
-#include "MechanicEntry.h"
 #include "LogEvent.h"
+#include "imgui/imgui.h"
 #include "bosses.h"
 #include "helpers.h"
 #include <string>

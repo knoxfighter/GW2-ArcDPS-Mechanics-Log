@@ -11,10 +11,15 @@ Here are some example screenshots (with names redacted):
 
 ![chart](https://i.imgur.com/dcP57iR.png)
 
+# Known Issues:
+- Clearing the mechanics chart breaks the chart https://github.com/MerlinAesalon/GW2-ArcDPS-Mechanics-Log/issues/4
+- Sunqua Peak Fractal mechanics are not complete, some are still missing.
 [(I use a custom arcdps font found here)](https://mega.nz/#!ck5kVL7I!T1Llgtnz5H6jRCnHWcCa0D5kJoqgE_0rudvscyDUT8I)
 # Currently detected mechanics
 <details><summary>Show list</summary>
 <p>
+
+Since i updated to a new imgui version, some graphic glitches could occur (overlapping text/elements also count). Please report them, so i can fix them.
 
 - Vale Guardian
   - teleport
@@ -125,60 +130,80 @@ Here are some example screenshots (with names redacted):
   - touched lava
   - expanding lightning
   - purple rectangle
-- Fractals of the Mists
-  - flux bombs
-  - Nightmare
-    - MAMA
-      - flaming whirl
-      - cone knockback
-      - giant leap
+
+### Fractals of the Mists
+- flux bombs
+- Nightmare
+  - MAMA
+    - flaming whirl
+    - cone knockback
+    - giant leap
+    - standing in acid
+    - knight’s hammer smash
+  - Siax
       - standing in acid
-      - knight’s hammer smash
-    - Siax
-        - standing in acid
-    - Ensolyss
-        - lunge (being run over)
-        - smash attack with the 5 adds
-  - Shattered Observatory
-    - Arkk
-      - standing in pie slices
-      - cone knockback
-      - getting a bomb
-      - getting a green circle
-- Strike Missions
-  - Boneskinner
-    - Charge
-    - Death Wind
-  - Fraenir
-    - Icequake
-    - Ice Shock Wave
-    - Freeze
-  - Kodan Brothers
-    - Trap
-  - Whisper of Jormag
-    - Chains
-    - Hit by Chains
-    - Preading ice
-    - Icy Slice
-    - Tornado
-  - Icebrood Construct
-    - Shock Wave
-    - Deadly Shockwave
-    - Arm Swing
-    - Ice Crystal
-    - Flail
-    - Ice Shatter
+  - Ensolyss
+      - lunge (being run over)
+      - smash attack with the 5 adds
+- Shattered Observatory
+  - Arkk
+    - standing in pie slices
+    - cone knockback
+    - getting a bomb
+    - getting a green circle
+- Sunqua Peak
+  - Ai, Keeper of the Peak
+    - Red Circle 
+    - Windspheres/Fireballs/Whirlpools/Laser (summoned during dashes)
+    - Wind blades (intersect center of arena during split)
+    - Call Meteor 
+    - Firestorm
+      
+### Strike Missions
+- Icebrood Construct
+  - Ice Arm Swing
+  - Ice Shatter (Ice Orbs)
+  - Ice Crystal
+  - Ice Flail
+  - Ice Shock Wave
+  - Deadly Ice Shockwave (knockdown)
+  - Shatter Arm (knockdown)
+- Voice and Claw
+  - Hammer Slam (knockdown)
+  - Hammer Spin (launch)
+- Fraenir of Jormag
+  - Icequake (knockdown)
+  - Frozen Missile (launch)
+  - Torrent of Ice (freeze)
+  - Ice Shock Wave/Seismic Crush (knockdown)
+  - Ice Flail (knockdown)
+  - Shatter Arm (knockdown)   
+- Boneskinner
+  - Grasp (AoE at player's feet)
+  - Charge (knockdown)
+  - Death Wind (launch)
+- Whisper of Jormag
+  - Chains of Frost (target and hits)
+  - Spreading Ice
+  - Icy Slice
+  - Icy Tempest (tornado)
+  - Lethal Coalescence
+- Cold War
+  - Lethal Coalescence
+  - Call Assassins
+  - Flame Wall
+  - Charge! (knockdown)
+  - Detonate
   
 </p>
 </details>
-
-If you have any ideas for things I’m missing, please let me know, preferably through github.
+If you have any ideas for things I’m missing, please let me know.
 
 I have no current interest in mechanics detection for PvP / WvW. I’m not even sure what kind of things would be useful to show from those game modes.
 
 # Installation:
 
-This requires a recent version of arcdps . When in doubt, get the latest from here.
+This requires a recent version of arcdps . When in doubt, get the latest from [here](https://www.deltaconnected.com/arcdps/).
 
 Put the .dll file in the same folder as arcdps (Program Files/Guild Wars 2/bin64 by default).
 
@@ -202,7 +227,7 @@ Be sure you’re running the latest version of arcdps.
 
 Ensure directx9 june2010 runtime is installed (needed for arcdps and this plugin)
 
-Ensure visual c 2013 x64 redist is installed (needed for arcdps and this plugin)
+Ensure visual c 2015-2019 x64 redist is installed (needed for arcdps and this plugin). [Microsoft Download Page](https://support.microsoft.com/en-gb/help/2977003/the-latest-supported-visual-c-downloads)
 
 Ensure the .dll file is in the “bin64″ folder, not the “bin” folder
 
@@ -244,16 +269,66 @@ If a player has a magnetic aura, reflecting distortion, etc and reflects a shard
 
 The chart will track downs/deaths of players in open-world PvE / WvW squads. This can get spammy. For now, I recommend clearing the chart before starting instanced content to avoid the clutter.
 
-Send bug reports, feedback, hate mail, etc through github.
+Send bug reports, feedback, hate mail, etc in a new issue here or join the [Elite Insights discord](https://discord.gg/dCDEPXx) and write in the channel #killproof-me-plugin.
+
 # Special thanks to:
 - deltaconnected for arcdps and the combat api
 - [KA] Karma and Omg Its Kayla.6479 for testing, feedback, and encouragement
 - MarsEdge for creating this tool
 
-# Original Changelog:
+# Changelog:
 <details><summary>Show changelog</summary>
 <p>
-
+    February 22 2021
+        Added support for ImGui 1.80
+    September 21 2020
+        Removed game links from tooltip as they don't all work
+        Added tracking for:
+            Fraenir of Jormag
+                Frozen Missile (launch)
+                Fixed tracking of Frozen + Unfrozen as 2 Frozen hits
+    September 20 2020
+        Added in game links as the tooltip for abilities in Strikes and Sunqua Peak when available
+        Added tracking for:
+            Icebrood Construct
+                Ice Shock Wave
+                Deadly Ice Shockwave (knockdown)
+                Shatter Arm (knockdown)
+                Ice Arm Swing
+                Ice Shatter (Ice Orbs)
+                Ice Crystal
+                Ice Flail
+            Voice and Claw
+                Hammer Slam (knockdown)
+                Hammer Spin (launch)
+            Fraenir of Jormag
+                Icequake (knockdown)
+                Torrent of Ice (freeze)
+                Ice Shock Wave/Seismic Crush (knockdown)
+                Ice Flail (knockdown)
+                Shatter Arm (knockdown)     
+            Boneskinner
+                Grasp (AoE at player's feet)
+                Charge (knockdown)
+                Death Wind
+            Cold War
+                Call Assassins
+                Flame Wall
+                Charge! (knockdown)
+                Detonate        
+                Lethal Coalescence
+            Whisper of Jormag
+                Chains of Frost (target and hits)
+                Spreading Ice
+                Icy Slice
+                Icy Tempest (tornado)
+                Lethal Coalescence
+            Ai, Keeper of the Peak 
+                Red Circle 
+                Windspheres/Fireballs/Whirlpools/Laser (summoned during dashes)
+                Wind blades (intersect center of arena during split)
+                Call Meteor 
+                Firestorm         
     July 9 2019
         Fix Arkk green/bomb mechanics not being tracked if player is downed
         Add tracking for:
