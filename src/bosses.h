@@ -8,11 +8,11 @@
 class Boss
 {
 public:
-	std::vector<uint32_t> ids = {};//npc id (from ag->prof)
-	std::string name = "";
-	int64_t timer = 0;//enrage timer
-	uint64_t health = 0;
-	uint16_t pulls = 0;
+	std::vector<uint32_t> ids;//npc id (from ag->prof)
+	std::string name;
+	int64_t timer;//enrage timer
+	uint64_t health;
+	uint16_t pulls;
 
 	Boss::Boss(std::string const p_name, std::vector<uint32_t> p_ids, int64_t p_timer, uint64_t p_health);
 
