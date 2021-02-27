@@ -151,8 +151,13 @@ int64_t Mechanic::isValidHit(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * play
 
 std::string Mechanic::getIniName()
 {
-	return std::to_string(ids[0])
-		+ " - " + (boss ? boss->name : "")
+	if (ids_size > 0)
+	{
+		return std::to_string(ids[0])
+			+ " - " + (boss ? boss->name : "")
+			+ " - " + name;
+	}
+	return "0 - " + (boss ? boss->name : "")
 		+ " - " + name;
 }
 
@@ -385,8 +390,8 @@ std::vector<Mechanic>& getMechanics()
 			//Mechanic().setName("touched the flame wall").setIds({MECHANIC_SAB_FLAMEWALL}).setBoss(&boss_sab),
 
 			Mechanic(&boss_sloth, "was hit with tantrum", {MECHANIC_SLOTH_TANTRUM}),
-			Mechanic(&boss_sloth, "got a bomb", {MECHANIC_SLOTH_BOMB}).setFailIfHit(false).setFrequencyPlayer(6000),
-			Mechanic(&boss_sloth, "stood in bomb aoe", {MECHANIC_SLOTH_BOMB_AOE}).setVerbosity(Verbosity::Chart),
+			Mechanic(&boss_sloth, "got poison", {MECHANIC_SLOTH_POISON}).setFailIfHit(false).setFrequencyPlayer(6000),
+			Mechanic(&boss_sloth, "stood in a poison aoe", {MECHANIC_SLOTH_POISON_AOE}).setVerbosity(Verbosity::Chart),
 			Mechanic(&boss_sloth, "was hit by flame breath", {MECHANIC_SLOTH_FLAME_BREATH}),
 			Mechanic(&boss_sloth, "was hit by shake", {MECHANIC_SLOTH_SHAKE}),
 			Mechanic(&boss_sloth, "is fixated", {MECHANIC_SLOTH_FIXATE}).setFailIfHit(false),
