@@ -87,7 +87,7 @@ extern Boss boss_ai;
 
 //Strike Missions
 extern Boss boss_icebrood_construct;
-extern Boss boss_voice_and_claw;
+extern Boss boss_kodan;
 extern Boss boss_fraenir;
 extern Boss boss_boneskinner;
 extern Boss boss_whisper;

@@ -413,10 +413,10 @@ std::vector<Mechanic>& getMechanics()
 			Mechanic(&boss_kc, "is fixated", {MECHANIC_KC_FIXATE}).setFailIfHit(false),
 			//Mechanic().setName("is west fixated").setIds({MECHANIC_KC_FIXATE_WEST}).setFailIfHit(false).setBoss(&boss_kc),
 			Mechanic(&boss_kc, "touched the core").setFailIfHit(false).setTargetIsDst(TargetLocation::Source).setFrequencyPlayer(8000).setSpecialRequirement(requirementKcCore),
-			Mechanic(&boss_kc,"was squashed",{35086},"Tower Drop").setIsInterupt(true),
+			Mechanic(&boss_kc, "was squashed",{35086},"Tower Drop").setIsInterupt(true),
 			Mechanic(&boss_kc, "stood in donut",{35137,34971,35086},"Phantasmal Blades"),
 
-			Mechanic(&boss_xera,"stood in red half", {34921}).setFrequencyPlayer(4000).setCanEvade(false).setCanBlock(false),//TODO:check internal name
+			Mechanic(&boss_xera, "stood in red half", {34921}).setFrequencyPlayer(4000).setCanEvade(false).setCanBlock(false),//TODO:check internal name
 			Mechanic(&boss_xera, "has magic", {MECHANIC_XERA_MAGIC}).setFailIfHit(false).setValidIfDown(true).setValue(15000),
 			Mechanic(&boss_xera, "used magic", {MECHANIC_XERA_MAGIC_BUFF}).setFailIfHit(false).setTargetIsDst(TargetLocation::Source).setFrequencyGlobal(12000).setValidIfDown(true).setSpecialRequirement(requirementOnSelf).setVerbosity(Verbosity::None),
 			Mechanic(&boss_xera, "triggered an orb", {MECHANIC_XERA_ORB}),
@@ -435,11 +435,11 @@ std::vector<Mechanic>& getMechanics()
 			Mechanic(&boss_sam, "has big green", {MECHANIC_SAM_GREEN_BIG}).setFailIfHit(false),
 			Mechanic(&boss_sam, "has small green", {MECHANIC_SAM_GREEN_SMALL}).setFailIfHit(false),
 
-			Mechanic(&boss_deimos,"touched an oil",{37716}, "Rapid Decay").setFrequencyPlayer(5000).setSpecialRequirement(requirementDeimosOil),
+			Mechanic(&boss_deimos, "touched an oil",{37716}, "Rapid Decay").setFrequencyPlayer(5000).setSpecialRequirement(requirementDeimosOil),
 			Mechanic(&boss_deimos, "was smashed", {MECHANIC_DEIMOS_SMASH,MECHANIC_DEIMOS_SMASH_INITIAL,MECHANIC_DEIMOS_SMASH_END_A,MECHANIC_DEIMOS_SMASH_END_B}),
 			Mechanic(&boss_deimos, "closed a tear", {MECHANIC_DEIMOS_TEAR}).setFailIfHit(false),
-			Mechanic(&boss_deimos,"has the teleport",{37730},"Chosen by Eye of Janthir").setFailIfHit(false).setValidIfDown(true).setCanBlock(false).setCanEvade(false).setCanInvuln(false).setFrequencyPlayer(0),
-			Mechanic(&boss_deimos,"was teleported",{38169}).setFrequencyPlayer(0).setCanBlock(false).setCanEvade(false).setCanInvuln(false).setVerbosity(Verbosity::Chart).setFailIfHit(false).setValidIfDown(true).setIsMultihit(false),
+			Mechanic(&boss_deimos, "has the teleport",{37730},"Chosen by Eye of Janthir").setFailIfHit(false).setValidIfDown(true).setCanBlock(false).setCanEvade(false).setCanInvuln(false).setFrequencyPlayer(0),
+			Mechanic(&boss_deimos, "was teleported",{38169}).setFrequencyPlayer(0).setCanBlock(false).setCanEvade(false).setCanInvuln(false).setVerbosity(Verbosity::Chart).setFailIfHit(false).setValidIfDown(true).setIsMultihit(false),
 
 			Mechanic(&boss_sh, "stood in inner ring", {MECHANIC_HORROR_DONUT_INNER}).setVerbosity(Verbosity::Chart),
 			Mechanic(&boss_sh, "stood in outer ring", {MECHANIC_HORROR_DONUT_OUTER}).setVerbosity(Verbosity::Chart),
@@ -572,8 +572,7 @@ std::vector<Mechanic>& getMechanics()
 			Mechanic(&boss_boneskinner, "was hit by charge", { MECHANIC_BONESKINNER_CHARGE }).setIsInterupt(true),
 			Mechanic(&boss_boneskinner, "was hit by Death Wind", { MECHANIC_BONESKINNER_DEATH_WIND }).setIsInterupt(true),
 
-				//this should work, but computer says no
-			//Mechanic(&boss_kodan, "was trapped", { MECHANIC_KODAN_TRAP }).setSpecialRequirement(requirementBuffApply),
+			Mechanic(&boss_kodan, "was trapped", { MECHANIC_KODAN_TRAP }).setSpecialRequirement(requirementBuffApply),
 
 			Mechanic(&boss_fraenir, "was hit by icequake", { MECHANIC_FRAENIR_ICEQUAKE }),
 			Mechanic(&boss_fraenir, "was hit by shock wave", { MECHANIC_FRAENIR_ICE_SHOCK_WAVE }),

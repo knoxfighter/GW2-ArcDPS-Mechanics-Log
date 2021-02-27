@@ -13,8 +13,8 @@ const uint32_t MECHANIC_SAB_FLAMEWALL = 31332;//Firestorm
 
 //slothasor
 const uint32_t MECHANIC_SLOTH_TANTRUM = 34479;//Tantrum
-const uint32_t MECHANIC_SLOTH_BOMB = 34387;//Volatile Poison
-const uint32_t MECHANIC_SLOTH_BOMB_AOE = 34481;//Volatile Poison
+const uint32_t MECHANIC_SLOTH_POISON = 34387;//Volatile Poison
+const uint32_t MECHANIC_SLOTH_POISON_AOE = 34481;//Volatile Poison
 const uint32_t MECHANIC_SLOTH_FLAME_BREATH = 34516;//nameless
 const uint32_t MECHANIC_SLOTH_SHAKE = 34482;//nameless
 const uint32_t MECHANIC_SLOTH_FIXATE = 34508;//Fixated
