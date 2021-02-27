@@ -70,17 +70,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
- <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <TargetName>d3d9_arcdps_mechanics</TargetName>
-    <SourcePath>$(SourcePath)</SourcePath>
-    <OutDir>E:\Spiele\Guild Wars 2\bin64\</OutDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <TargetName>d3d9_arcdps_mechanics</TargetName>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
-    <SourcePath>$(SourcePath)</SourcePath>
-    <OutDir>E:\Spiele\Guild Wars 2\bin64\</OutDir>
-  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ARCDPSMECHANICSLOG_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
