@@ -298,9 +298,7 @@ void AppOptions::draw(Tracker* tracker, const char * title, bool * p_open, ImGui
 		if(previous_boss && previous_boss != current_mechanic->boss)
 			ImGui::Separator();
 
-		int verbosity = (int)current_mechanic->verbosity;
-
-		ImGui::Combo(current_mechanic->getChartName().c_str(), &verbosity,
+		ImGui::Combo(current_mechanic->getChartName().c_str(), (int*)&(current_mechanic->verbosity),
 			"Hidden\0"
 			"Chart Only\0"
 			"Log only\0"
