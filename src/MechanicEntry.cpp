@@ -1,6 +1,6 @@
 #include "MechanicEntry.h"
 
-MechanicEntry::MechanicEntry(uint64_t new_time, Mechanic * new_mechanic, Player * new_player, Boss * new_boss)
+MechanicEntry::MechanicEntry(uint64_t new_time, Mechanic * new_mechanic, Player * new_player, const Boss * new_boss)
 {
 	player = new_player;
 	mechanic = new_mechanic;

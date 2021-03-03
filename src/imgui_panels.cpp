@@ -291,7 +291,7 @@ void AppOptions::draw(Tracker* tracker, const char * title, bool * p_open, ImGui
 
 	ImGui::PushItemWidth(ImGui::GetWindowWidth()/3.0f);
 
-	Boss* previous_boss = nullptr;
+	const Boss* previous_boss = nullptr;
 
 	for (auto current_mechanic = getMechanics().begin(); current_mechanic != getMechanics().end(); ++current_mechanic)
 	{

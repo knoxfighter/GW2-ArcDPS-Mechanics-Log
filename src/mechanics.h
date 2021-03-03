@@ -98,7 +98,7 @@ public:
 	std::string getChartName();
 
 	//TODO: make read-only? const?
-	Boss* getBoss() { return this->boss; };
+	const Boss* getBoss() { return this->boss; };
 	const std::string getName() { return this->name; };
 
     bool (Mechanic::*special_requirement)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
