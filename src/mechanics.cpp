@@ -150,7 +150,7 @@ int64_t Mechanic::isValidHit(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * play
 }
 
 
-std::string Mechanic::getIniName()
+const std::string Mechanic::getIniName()
 {
 	return name_ini;
 }

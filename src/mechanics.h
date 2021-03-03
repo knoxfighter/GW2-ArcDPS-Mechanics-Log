@@ -94,10 +94,9 @@ public:
 
 	int64_t isValidHit(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst);
 
-	std::string getIniName();
+	const std::string getIniName();
 	std::string getChartName();
 
-	//TODO: make read-only? const?
 	const Boss* getBoss() { return this->boss; };
 	const std::string getName() { return this->name; };
 
