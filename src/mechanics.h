@@ -28,16 +28,18 @@ enum class TargetLocation : bool
 	Destination = true,
 };
 
-struct Mechanic
+class Mechanic
 {
+public:
+	Boss* boss;//required boss, ignored if null
     std::string name; //name of mechanic
+	uint32_t ids[max_ids_per_mechanic]; //skill ids;
+	size_t ids_size;
+
     std::string name_internal; //name of skill in skilldef
     std::string name_chart; //name in chart (boss name - mechanic name)
     std::string name_ini; //name used for ini saving
 	std::string description; //detailed description of what the mechanic is
-	uint32_t ids[max_ids_per_mechanic]; //skill ids;
-	size_t ids_size;
-    Boss* boss;//required boss, ignored if null
     uint64_t frequency_player; //minimum time between instances of this mechanic per player(ms)
     uint64_t frequency_global; //minimum time between instances of this mechanic globally(ms)
     uint64_t last_hit_time; //time of last instance of mechanic
@@ -63,7 +65,9 @@ struct Mechanic
 
 	Verbosity verbosity;//if mechanic should be displayed in the log, chart, or everywhere
 
-	::Mechanic(Boss* new_boss,
+	std::string generateIniName();
+
+	Mechanic(Boss* new_boss,
 		std::string new_name,
 		std::initializer_list<uint32_t> new_ids,
 		std::string new_description,
@@ -78,8 +82,8 @@ struct Mechanic
 		bool new_can_evade,
 		bool new_can_block,
 		bool new_can_invuln,
-		bool(*new_special_requirement)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player),
-		int64_t(*new_special_value)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player),
+		bool(Mechanic::*new_special_requirement)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player),
+		int64_t(Mechanic::*new_special_value)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player),
 		std::string new_name_internal,
 		bool new_valid_if_down,
 		int32_t new_overstack_value,
@@ -91,13 +95,11 @@ struct Mechanic
 	std::string getIniName();
 	std::string getChartName();
 
-    bool (*special_requirement)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
-    int64_t (*special_value)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
+    bool (Mechanic::*special_requirement)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
+    int64_t (Mechanic::*special_value)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
 
-    Mechanic setName(std::string const new_name) {this->name = new_name; this->name_chart = this->getChartName(); return *this;}
     Mechanic setNameInternal(std::string const new_name_internal) {this->name_internal = new_name_internal; return *this;}
     Mechanic setDescription(std::string const new_description) {this->description = new_description; return *this;}
-	Mechanic setIds(std::initializer_list<uint32_t> const new_ids) { std::copy(new_ids.begin(), new_ids.end(), this->ids); this->ids_size = new_ids.size(); return *this; }
     Mechanic setBoss(Boss* const new_boss) {this->boss = new_boss; this->name_chart = this->getChartName(); return *this;}
     Mechanic setFrequencyPlayer(uint64_t const new_frequency_player) {this->frequency_player = new_frequency_player; return *this;}
     Mechanic setFrequencyGlobal(uint64_t const new_frequency_global) {this->frequency_global = new_frequency_global; return *this;}
@@ -115,22 +117,25 @@ struct Mechanic
 	Mechanic setCanInvuln(bool const new_can_invuln) { this->can_invuln = new_can_invuln; return *this; }
 	Mechanic setVerbosity(Verbosity const new_verbosity) { this->verbosity = new_verbosity; return *this; }
 
-    Mechanic setSpecialRequirement(bool (*new_special_requirement)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)) {this->special_requirement = new_special_requirement; return *this;}
-    Mechanic setSpecialReturnValue(int64_t(*new_special_value)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)) {this->special_value = new_special_value; return *this;}
+    Mechanic setSpecialRequirement(bool (Mechanic::*new_special_requirement)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)) {special_requirement = new_special_requirement; return *this;}
+    Mechanic setSpecialReturnValue(int64_t(Mechanic::*new_special_value)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)) {special_value = new_special_value; return *this;}
 
 	bool operator==(Mechanic* other_mechanic);
+
+	bool requirementDefault(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
+	bool requirementDhuumSnatch(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
+	bool requirementBuffApply(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
+	bool requirementKcCore(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
+	bool requirementShTdCc(cbtevent * ev, ag * ag_src, ag * ag_dst, Player * player_src, Player * player_dst, Player * current_player);
+	bool requirementCaveEyeCc(cbtevent * ev, ag * ag_src, ag * ag_dst, Player * player_src, Player * player_dst, Player * current_player);
+	bool requirementDhuumMessenger(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
+	bool requirementDeimosOil(cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player);
+	bool requirementOnSelf(cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player);
+	int64_t valueDefault(cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player);
+	int64_t valueDhuumShackles(cbtevent* ev, ag* ag_src, ag* ag_dst, Player* player_src, Player* player_dst, Player* current_player);
+
 };
 
-bool requirementDefault(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
-bool requirementDhuumSnatch(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
-bool requirementBuffApply(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
-bool requirementKcCore(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
-bool requirementShTdCc(const Mechanic & current_mechanic, cbtevent * ev, ag * ag_src, ag * ag_dst, Player * player_src, Player * player_dst, Player * current_player);
-bool requirementCaveEyeCc(const Mechanic & current_mechanic, cbtevent * ev, ag * ag_src, ag * ag_dst, Player * player_src, Player * player_dst, Player * current_player);
-bool requirementDhuumMessenger(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
-
-int64_t valueDefault(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
-int64_t valueDhuumShackles(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
 
 struct DeimosOil
 {
@@ -139,8 +144,5 @@ struct DeimosOil
 	uint64_t last_touch_time = 0;
 };
 
-bool requirementDeimosOil(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player);
-
-bool requirementOnSelf(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player);
 
 std::vector<Mechanic>& getMechanics();

@@ -17,20 +17,20 @@ Mechanic::Mechanic(Boss* new_boss = &boss_generic, //TODO: should this be explic
 	bool new_can_evade = true,
 	bool new_can_block = true,
 	bool new_can_invuln = true,
-	bool(*new_special_requirement)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player) = requirementDefault,
-	int64_t(*new_special_value)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player) = valueDefault,
+	bool(Mechanic::*new_special_requirement)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player) = &requirementDefault,
+	int64_t(Mechanic::*new_special_value)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player) = &valueDefault,
 	std::string new_name_internal = "",
 	bool new_valid_if_down = false,
 	int32_t new_overstack_value = -1,
 	int32_t new_value = -1,
 	Verbosity new_verbosity = Verbosity::All)
 {
+	boss = new_boss;
 	name = new_name;
 
 	std::copy(new_ids.begin(), new_ids.end(), ids);
 	ids_size = new_ids.size();
 
-	boss = new_boss;
 	fail_if_hit = new_fail_if_hit;
 	valid_if_down = new_valid_if_down;
 	verbosity = new_verbosity;
@@ -60,7 +60,7 @@ Mechanic::Mechanic(Boss* new_boss = &boss_generic, //TODO: should this be explic
 
 	name_chart = (new_boss ? new_boss->name : "")
 		+ " - " + new_name;
-	name_ini = getIniName();//TODO: replace this with the code from getIniName() once all mechanic definitions use new style
+	name_ini = generateIniName();
 }
 
 int64_t Mechanic::isValidHit(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst)
@@ -142,14 +142,20 @@ int64_t Mechanic::isValidHit(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * play
 
 	if (is_interupt && current_player->last_stab_time > ev->time) return false;
 
-	if (!special_requirement(*this, ev, ag_src, ag_dst, player_src, player_dst, current_player)) return false;
+	if (!(this->*special_requirement)(ev, ag_src, ag_dst, player_src, player_dst, current_player)) return false;
 
 	last_hit_time = ev->time;
 
-	return special_value(*this, ev, ag_src, ag_dst, player_src, player_dst, current_player);
+	return (this->*special_value)(ev, ag_src, ag_dst, player_src, player_dst, current_player);
 }
 
+
 std::string Mechanic::getIniName()
+{
+	return name_ini;
+}
+
+std::string Mechanic::generateIniName()
 {
 	if (ids_size > 0)
 	{
@@ -172,12 +178,12 @@ bool Mechanic::operator==(Mechanic* other_mechanic)
 	return other_mechanic && ids[0] == other_mechanic->ids[0];
 }
 
-bool requirementDefault(const ::Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+bool Mechanic::requirementDefault(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	return true;
 }
 
-bool requirementDhuumSnatch(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+bool Mechanic::requirementDhuumSnatch(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	static std::list<std::pair<uint16_t, uint64_t>> players_snatched;//pair is <instance id,last snatch time>
 
@@ -186,7 +192,7 @@ bool requirementDhuumSnatch(const Mechanic &current_mechanic, cbtevent* ev, ag* 
 		//if player has been snatched before and is in tracking
 		if (ev->dst_instid == current_pair->first)
 		{
-			if ((current_pair->second + current_mechanic.frequency_player) > ev->time)
+			if ((current_pair->second + frequency_player) > ev->time)
 			{
 				current_pair->second = ev->time;
 				return false;
@@ -204,14 +210,14 @@ bool requirementDhuumSnatch(const Mechanic &current_mechanic, cbtevent* ev, ag* 
 	return true;
 }
 
-bool requirementBuffApply(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player)
+bool Mechanic::requirementBuffApply(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player)
 {
 	return ev
 		&& ev->buff
 		&& ev->buff_dmg == 0;
 }
 
-bool requirementKcCore(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+bool Mechanic::requirementKcCore(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	if (!ev) return false;
 
@@ -231,7 +237,7 @@ bool requirementKcCore(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_s
 	return true;
 }
 
-bool requirementShTdCc(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+bool Mechanic::requirementShTdCc(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	if (!ev) return false;
 
@@ -252,7 +258,7 @@ bool requirementShTdCc(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_s
 	return true;
 }
 
-bool requirementCaveEyeCc(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+bool Mechanic::requirementCaveEyeCc(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	if (!ev) return false;
 
@@ -274,7 +280,7 @@ bool requirementCaveEyeCc(const Mechanic & current_mechanic, cbtevent* ev, ag* a
 	return true;
 }
 
-bool requirementDhuumMessenger(const Mechanic & current_mechanic, cbtevent * ev, ag * ag_src, ag * ag_dst, Player * player_src, Player * player_dst, Player * current_player)
+bool Mechanic::requirementDhuumMessenger(cbtevent * ev, ag * ag_src, ag * ag_dst, Player * player_src, Player * player_dst, Player * current_player)
 {
 	static std::list<uint16_t> messengers;
 	static std::mutex messengers_mtx;
@@ -309,7 +315,7 @@ bool requirementDhuumMessenger(const Mechanic & current_mechanic, cbtevent * ev,
 	return true;
 }
 
-bool requirementDeimosOil(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+bool Mechanic::requirementDeimosOil(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	static const uint16_t max_deimos_oils = 3;
 	static DeimosOil deimos_oils[max_deimos_oils];
@@ -342,7 +348,7 @@ bool requirementDeimosOil(const Mechanic &current_mechanic, cbtevent* ev, ag* ag
 	else
 	{//oil is already known
 		current_oil->last_touch_time = ev->time;
-		if ((ev->time - current_oil->last_touch_time) > current_mechanic.frequency_player)
+		if ((ev->time - current_oil->last_touch_time) > frequency_player)
 		{
 			return true;
 		}
@@ -353,17 +359,17 @@ bool requirementDeimosOil(const Mechanic &current_mechanic, cbtevent* ev, ag* ag
 	}
 }
 
-bool requirementOnSelf(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+bool Mechanic::requirementOnSelf(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	return ev->src_instid == ev->dst_instid;
 }
 
-int64_t valueDefault(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
+int64_t Mechanic::valueDefault(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
 	return 1;
 }
 
-int64_t valueDhuumShackles(const Mechanic & current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player)
+int64_t Mechanic::valueDhuumShackles(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player * current_player)
 {
 	return (int64_t)30 - ((int64_t)ev->value / 1000);
 }
@@ -382,7 +388,7 @@ std::vector<Mechanic>& getMechanics()
 
 			Mechanic(&boss_gors, "was slammed", {MECHANIC_GORS_SLAM}).setIsInterupt(true),
 			Mechanic(&boss_gors, "was egged", {MECHANIC_GORS_EGG}),
-			Mechanic(&boss_gors, "touched an orb", {MECHANIC_GORS_ORB}).setSpecialRequirement(requirementBuffApply),
+			Mechanic(&boss_gors, "touched an orb", {MECHANIC_GORS_ORB}).setSpecialRequirement(&Mechanic::requirementBuffApply),
 
 			Mechanic(&boss_sab, "got a sapper bomb", {MECHANIC_SAB_SAPPER_BOMB}).setFailIfHit(false).setValidIfDown(true),
 			Mechanic(&boss_sab, "got a time bomb", {MECHANIC_SAB_TIME_BOMB}).setFailIfHit(false).setValidIfDown(true),
@@ -412,13 +418,13 @@ std::vector<Mechanic>& getMechanics()
 
 			Mechanic(&boss_kc, "is fixated", {MECHANIC_KC_FIXATE}).setFailIfHit(false),
 			//Mechanic().setName("is west fixated").setIds({MECHANIC_KC_FIXATE_WEST}).setFailIfHit(false).setBoss(&boss_kc),
-			Mechanic(&boss_kc, "touched the core").setFailIfHit(false).setTargetIsDst(TargetLocation::Source).setFrequencyPlayer(8000).setSpecialRequirement(requirementKcCore),
+			Mechanic(&boss_kc, "touched the core").setFailIfHit(false).setTargetIsDst(TargetLocation::Source).setFrequencyPlayer(8000).setSpecialRequirement(&Mechanic::requirementKcCore),
 			Mechanic(&boss_kc, "was squashed",{35086},"Tower Drop").setIsInterupt(true),
 			Mechanic(&boss_kc, "stood in donut",{35137,34971,35086},"Phantasmal Blades"),
 
 			Mechanic(&boss_xera, "stood in red half", {34921}).setFrequencyPlayer(4000).setCanEvade(false).setCanBlock(false),//TODO:check internal name
 			Mechanic(&boss_xera, "has magic", {MECHANIC_XERA_MAGIC}).setFailIfHit(false).setValidIfDown(true).setValue(15000),
-			Mechanic(&boss_xera, "used magic", {MECHANIC_XERA_MAGIC_BUFF}).setFailIfHit(false).setTargetIsDst(TargetLocation::Source).setFrequencyGlobal(12000).setValidIfDown(true).setSpecialRequirement(requirementOnSelf).setVerbosity(Verbosity::None),
+			Mechanic(&boss_xera, "used magic", {MECHANIC_XERA_MAGIC_BUFF}).setFailIfHit(false).setTargetIsDst(TargetLocation::Source).setFrequencyGlobal(12000).setValidIfDown(true).setSpecialRequirement(&Mechanic::requirementOnSelf).setVerbosity(Verbosity::None),
 			Mechanic(&boss_xera, "triggered an orb", {MECHANIC_XERA_ORB}),
 			Mechanic(&boss_xera, "stood in an orb aoe", {MECHANIC_XERA_ORB_AOE}).setFrequencyPlayer(1000).setVerbosity(Verbosity::Chart),
 			Mechanic(&boss_xera, "was teleported", {MECHANIC_XERA_PORT}).setVerbosity(Verbosity::Chart),
@@ -435,7 +441,7 @@ std::vector<Mechanic>& getMechanics()
 			Mechanic(&boss_sam, "has big green", {MECHANIC_SAM_GREEN_BIG}).setFailIfHit(false),
 			Mechanic(&boss_sam, "has small green", {MECHANIC_SAM_GREEN_SMALL}).setFailIfHit(false),
 
-			Mechanic(&boss_deimos, "touched an oil",{37716}, "Rapid Decay").setFrequencyPlayer(5000).setSpecialRequirement(requirementDeimosOil),
+			Mechanic(&boss_deimos, "touched an oil",{37716}, "Rapid Decay").setFrequencyPlayer(5000).setSpecialRequirement(&Mechanic::requirementDeimosOil),
 			Mechanic(&boss_deimos, "was smashed", {MECHANIC_DEIMOS_SMASH,MECHANIC_DEIMOS_SMASH_INITIAL,MECHANIC_DEIMOS_SMASH_END_A,MECHANIC_DEIMOS_SMASH_END_B}),
 			Mechanic(&boss_deimos, "closed a tear", {MECHANIC_DEIMOS_TEAR}).setFailIfHit(false),
 			Mechanic(&boss_deimos, "has the teleport",{37730},"Chosen by Eye of Janthir").setFailIfHit(false).setValidIfDown(true).setCanBlock(false).setCanEvade(false).setCanInvuln(false).setFrequencyPlayer(0),
@@ -448,7 +454,7 @@ std::vector<Mechanic>& getMechanics()
 			Mechanic(&boss_sh, "touched a scythe", {MECHANIC_HORROR_SCYTHE}),
 			Mechanic(&boss_sh, "took fixate", {MECHANIC_HORROR_FIXATE}).setFailIfHit(false).setVerbosity(Verbosity::Chart),
 			Mechanic(&boss_sh, "was debuffed", {MECHANIC_HORROR_DEBUFF}).setFailIfHit(false).setVerbosity(Verbosity::Chart),
-			Mechanic(&boss_sh, "CCed a tormented dead",{872,833,31465}, "Stun, Daze, Temporal stasis").setValidIfDown(true).setTargetIsDst(TargetLocation::Source).setSpecialRequirement(requirementShTdCc),
+			Mechanic(&boss_sh, "CCed a tormented dead",{872,833,31465}, "Stun, Daze, Temporal stasis").setValidIfDown(true).setTargetIsDst(TargetLocation::Source).setSpecialRequirement(&Mechanic::requirementShTdCc),
 
 			Mechanic(&boss_soul_eater, "was puked on", {MECHANIC_EATER_PUKE}).setFrequencyPlayer(3000).setVerbosity(Verbosity::Chart),
 			Mechanic(&boss_soul_eater, "stood in web", {MECHANIC_EATER_WEB}).setFrequencyPlayer(3000).setVerbosity(Verbosity::Chart),
@@ -457,7 +463,7 @@ std::vector<Mechanic>& getMechanics()
 
 			Mechanic(&boss_ice_king, "got a green",{47013}, "Hailstorm").setFrequencyPlayer(0).setFailIfHit(false).setValidIfDown(true).setIsMultihit(false).setVerbosity(Verbosity::Chart),
 
-			Mechanic(&boss_cave, "CCed an eye",{872}, "Stun").setTargetIsDst(TargetLocation::Source).setFrequencyPlayer(0).setSpecialRequirement(requirementCaveEyeCc).setFailIfHit(false).setValidIfDown(true).setIsMultihit(false),
+			Mechanic(&boss_cave, "CCed an eye",{872}, "Stun").setTargetIsDst(TargetLocation::Source).setFrequencyPlayer(0).setSpecialRequirement(&Mechanic::requirementCaveEyeCc).setFailIfHit(false).setValidIfDown(true).setIsMultihit(false),
 
 			Mechanic(&boss_dhuum, "touched a messenger", {MECHANIC_DHUUM_GOLEM}),
 			Mechanic(&boss_dhuum, "is shackled", {MECHANIC_DHUUM_SHACKLE}).setFailIfHit(false).setTargetIsDst(TargetLocation::Source),
@@ -472,7 +478,7 @@ std::vector<Mechanic>& getMechanics()
 			Mechanic(&boss_dhuum, "stood in dip aoe", {MECHANIC_DHUUM_TELEPORT_AOE}),
 			//Mechanic().setName("died on green").setIds({MECHANIC_DHUUM_GREEN_TIMER}).setIsBuffremove(CBTB_MANUAL).setOverstackValue(0).setBoss(&boss_dhuum),
 			//Mechanic().setName("aggroed a messenger").setNameInternal("").setTargetIsDst(false).setFailIfHit(false).setFrequencyPlayer(0).setValidIfDown(true).setBoss(&boss_dhuum).setSpecialRequirement(requirementDhuumMessenger),
-			Mechanic(&boss_dhuum, "was snatched", {MECHANIC_DHUUM_SNATCH}).setSpecialRequirement(requirementDhuumSnatch),
+			Mechanic(&boss_dhuum, "was snatched", {MECHANIC_DHUUM_SNATCH}).setSpecialRequirement(&Mechanic::requirementDhuumSnatch),
 			//Mechanic().setName("canceled button channel").setIds({MECHANIC_DHUUM_BUTTON_CHANNEL}).setIsActivation(ACTV_CANCEL_CANCEL).setBoss(&boss_dhuum),
 			Mechanic(&boss_dhuum, "stood in cone", {MECHANIC_DHUUM_CONE}),
 
@@ -572,18 +578,18 @@ std::vector<Mechanic>& getMechanics()
 			Mechanic(&boss_boneskinner, "was hit by charge", { MECHANIC_BONESKINNER_CHARGE }).setIsInterupt(true),
 			Mechanic(&boss_boneskinner, "was hit by Death Wind", { MECHANIC_BONESKINNER_DEATH_WIND }).setIsInterupt(true),
 
-			Mechanic(&boss_kodan, "was trapped", { MECHANIC_KODAN_TRAP }).setSpecialRequirement(requirementBuffApply),
+			Mechanic(&boss_kodan, "was trapped", { MECHANIC_KODAN_TRAP }).setSpecialRequirement(&Mechanic::requirementBuffApply),
 
 			Mechanic(&boss_fraenir, "was hit by icequake", { MECHANIC_FRAENIR_ICEQUAKE }),
 			Mechanic(&boss_fraenir, "was hit by shock wave", { MECHANIC_FRAENIR_ICE_SHOCK_WAVE }),
-			Mechanic(&boss_fraenir, "was frozen", { MECHANIC_FRAENIR_FROZEN }).setSpecialRequirement(requirementBuffApply),
+			Mechanic(&boss_fraenir, "was frozen", { MECHANIC_FRAENIR_FROZEN }).setSpecialRequirement(&Mechanic::requirementBuffApply),
 
 			Mechanic(&boss_whisper, "was hit by chains", { MECHANIC_WHISPER_CHAINS }),
 			Mechanic(&boss_whisper, "was hit by own spreading ice", { MECHANIC_WHISPER_OWN_ICE }),
 			Mechanic(&boss_whisper, "was hit by other spreading ice", { MECHANIC_WHISPER_OTHER_ICE }),
 			Mechanic(&boss_whisper, "was hit by icy slice", { MECHANIC_WHISPER_ICY_SLICE }),
 			Mechanic(&boss_whisper, "was hit by ice tornado", { MECHANIC_WHISPER_ICE_TEMPEST }),
-			Mechanic(&boss_whisper, "has a chain", { MECHANIC_WHISPER_HAS_CHAINS }).setFailIfHit(false).setSpecialRequirement(requirementBuffApply),
+			Mechanic(&boss_whisper, "has a chain", { MECHANIC_WHISPER_HAS_CHAINS }).setFailIfHit(false).setSpecialRequirement(&Mechanic::requirementBuffApply),
 
 				//Icebrood Construct
 			Mechanic(&boss_icebrood_construct, "was hit by deadly shock wave", { MECHANIC_ICEBROOD_SHOCK_WAVE_DEADLY }),
