@@ -30,9 +30,11 @@ enum class TargetLocation : bool
 
 class Mechanic
 {
-public:
+private:
 	Boss* boss;//required boss, ignored if null
-    std::string name; //name of mechanic
+	std::string name; //name of mechanic
+
+public:
 	uint32_t ids[max_ids_per_mechanic]; //skill ids;
 	size_t ids_size;
 
@@ -94,6 +96,10 @@ public:
 
 	std::string getIniName();
 	std::string getChartName();
+
+	//TODO: make read-only? const?
+	Boss* getBoss() { return this->boss; };
+	const std::string getName() { return this->name; };
 
     bool (Mechanic::*special_requirement)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);
     int64_t (Mechanic::*special_value)(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player);

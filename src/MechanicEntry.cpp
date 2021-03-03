@@ -16,7 +16,7 @@ std::string MechanicEntry::toString()
 
 	return
 		(current_boss ? current_boss->name : "") + "," +
-		mechanic->name + "," +
+		mechanic->getName() + "," +
 		(!mechanic->fail_if_hit ? std::to_string(hits) + "," : "," + std::to_string(hits)) +
 		"," + "," + "," +
 		std::to_string(pulls) +

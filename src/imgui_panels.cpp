@@ -295,7 +295,7 @@ void AppOptions::draw(Tracker* tracker, const char * title, bool * p_open, ImGui
 
 	for (auto current_mechanic = getMechanics().begin(); current_mechanic != getMechanics().end(); ++current_mechanic)
 	{
-		if(previous_boss && previous_boss != current_mechanic->boss)
+		if(previous_boss && previous_boss != current_mechanic->getBoss())
 			ImGui::Separator();
 
 		ImGui::Combo(current_mechanic->getChartName().c_str(), (int*)&(current_mechanic->verbosity),
@@ -309,7 +309,7 @@ void AppOptions::draw(Tracker* tracker, const char * title, bool * p_open, ImGui
 			ImGui::SameLine(); showHelpMarker(current_mechanic->description.c_str());
 		}
 
-		previous_boss = current_mechanic->boss;
+		previous_boss = current_mechanic->getBoss();
 	}
 	ImGui::PopItemWidth();
 

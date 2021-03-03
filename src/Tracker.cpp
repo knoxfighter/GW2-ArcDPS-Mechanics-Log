@@ -262,7 +262,7 @@ void Tracker::processMechanic(const cbtevent* ev, PlayerEntry* new_player_src, P
 
 	has_logged_mechanic = true;
 	
-	relevant_entry->addMechanicEntry(ev->time, new_mechanic, new_mechanic->boss);
+	relevant_entry->addMechanicEntry(ev->time, new_mechanic, new_mechanic->getBoss());
 }
 
 int Tracker::getElapsedTime(uint64_t const &current_time) noexcept
