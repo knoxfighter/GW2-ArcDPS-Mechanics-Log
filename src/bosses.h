@@ -8,13 +8,13 @@
 class Boss
 {
 public:
-	std::vector<uint32_t> ids = {};//npc id (from ag->prof)
-	std::string name = "";
-	int64_t timer = 0;//enrage timer
-	uint64_t health = 0;
-	uint16_t pulls = 0;
+	std::vector<uint32_t> ids;//npc id (from ag->prof)
+	std::string name;
+	int64_t timer;//enrage timer
+	uint64_t health;
+	uint16_t pulls;
 
-	Boss();
+	Boss::Boss(std::string const p_name, std::vector<uint32_t> p_ids, int64_t p_timer, uint64_t p_health);
 
 	bool hasId(uint32_t new_id);
 
@@ -27,6 +27,8 @@ public:
 };
 
 extern Boss boss_generic;
+
+//Raids
 
 //W1
 extern Boss boss_vg;
@@ -66,6 +68,8 @@ extern Boss boss_qadim;
 extern Boss boss_adina;
 extern Boss boss_sabir;
 extern Boss boss_qadim2;
+
+//Fractals
 extern Boss boss_fotm_generic;
 
 //Nightmare
@@ -83,7 +87,7 @@ extern Boss boss_ai;
 
 //Strike Missions
 extern Boss boss_icebrood_construct;
-extern Boss boss_voice_and_claw;
+extern Boss boss_kodan;
 extern Boss boss_fraenir;
 extern Boss boss_boneskinner;
 extern Boss boss_whisper;

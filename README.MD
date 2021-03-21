@@ -1,7 +1,7 @@
 # [Click Here to Download](/../../releases)
 
 # Overview
-I’ve been working on a plugin for ArcDPS using its realtime combat api. The plugin shows a realtime list of failed mechanics for players. The mechanics are determined by the skill id of the attack a player/npc is hit by. It shows a timestamp in ‘min:sec’ since entering combat and ‘X was hit by Y mechanic’.
+MarsEdge has been working on a plugin for ArcDPS using its realtime combat api. The plugin shows a realtime list of failed mechanics for players. The mechanics are determined by the skill id of the attack a player/npc is hit by. It shows a timestamp in ‘min:sec’ since entering combat and ‘X was hit by Y mechanic’.
 
 This plugin is not intended to breed toxicity, but instead help show players mechanical areas where the players can improve. This is in the same way that arcdps shows how dps/boons could be improved.
 
@@ -14,11 +14,13 @@ Here are some example screenshots (with names redacted):
 # Known Issues:
 - Clearing the mechanics chart breaks the chart https://github.com/MerlinAesalon/GW2-ArcDPS-Mechanics-Log/issues/4
 - Sunqua Peak Fractal mechanics are not complete, some are still missing.
+[(I use a custom arcdps font found here)](https://mega.nz/#!ck5kVL7I!T1Llgtnz5H6jRCnHWcCa0D5kJoqgE_0rudvscyDUT8I)
+# Currently detected mechanics
+<details><summary>Show list</summary>
+<p>
 
 Since i updated to a new imgui version, some graphic glitches could occur (overlapping text/elements also count). Please report them, so i can fix them.
 
-# Mechanics Logged
-### Raids
 - Vale Guardian
   - teleport
 - Gorseval
@@ -192,10 +194,12 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - Flame Wall
   - Charge! (knockdown)
   - Detonate
-
+  
+</p>
+</details>
 If you have any ideas for things I’m missing, please let me know.
 
-I have no current interest in mechanics detection for PvP / WvW. I’m not even sure what kind of things would be useful to show from those game modes. I don’t PvP / WvW much myself.
+I have no current interest in mechanics detection for PvP / WvW. I’m not even sure what kind of things would be useful to show from those game modes.
 
 # Installation:
 
@@ -205,7 +209,7 @@ Put the .dll file in the same folder as arcdps (Program Files/Guild Wars 2/bin64
 
 To disable, just remove the .dll or move it to a different folder.
 
-This plugin shouldn’t need to be updated with Guild Wars 2 updates, but arcdps must be compatible with Guild Wars 2.
+This plugin shouldn’t need to be updated with Guild Wars 2 updates, but arcdps must be compatible with Guild Wars 2. It does need to be updated for new encounters / abilities.
 
 If arcdps updates the combat api, this plugin might need to be updated for compatibility.
 
@@ -257,7 +261,7 @@ Some mechanics are not necessarily the hit player’s fault. If 1 sub-group gets
 
 Q: Is it Terms of Service compliant?
 
-A: Yes. I’ve talked to Chris Cleary from Anet and he did not see any issues with compliance. ([part1](https://i.imgur.com/hwAe5L9.png) [part2](https://i.imgur.com/pnLhxQd.png))
+A: Yes. MarsEdge has talked to Chris Cleary from Anet and he did not see any issues with compliance. ([part1](https://i.imgur.com/hwAe5L9.png) [part2](https://i.imgur.com/pnLhxQd.png))
 
 # Known Issues:
 
@@ -270,8 +274,11 @@ Send bug reports, feedback, hate mail, etc in a new issue here or join the [Elit
 # Special thanks to:
 - deltaconnected for arcdps and the combat api
 - [KA] Karma and Omg Its Kayla.6479 for testing, feedback, and encouragement
+- MarsEdge for creating this tool
 
 # Changelog:
+<details><summary>Show changelog</summary>
+<p>
     February 22 2021
         Added support for ImGui 1.80
     September 21 2020
@@ -659,3 +666,5 @@ Send bug reports, feedback, hate mail, etc in a new issue here or join the [Elit
         Added Sabetha sapper bomb, time bomb detection (this will currently be a bit spammy at Bandit Trio and during trash clearing)
     October 4 2017
         Initial release
+</p>
+</details>

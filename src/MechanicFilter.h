@@ -1,8 +1,10 @@
 #pragma once
 
 #include "LogEvent.h"
-#include "npc_ids.h"
 #include "imgui/imgui.h"
+#include "bosses.h"
+#include "helpers.h"
+#include <string>
 
 class MechanicFilter
 {
@@ -20,7 +22,7 @@ public:
 
 	void drawPopup();
 	bool isActive();
-	bool passFilter(Player* new_player, Boss* new_boss, Mechanic* new_mechanic, int new_display_section);
+	bool passFilter(Player* new_player, const Boss* new_boss, Mechanic* new_mechanic, Verbosity new_display_section);
 	bool passFilter(LogEvent* new_event);
 };
 

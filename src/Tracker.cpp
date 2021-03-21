@@ -245,7 +245,7 @@ void Tracker::processMechanic(const cbtevent* ev, PlayerEntry* new_player_src, P
 {
 	std::lock_guard<std::mutex> lg(tracker_mtx);
 
-	PlayerEntry* relevant_entry = new_mechanic->target_is_dst ? new_player_dst : new_player_src;
+	PlayerEntry* relevant_entry = new_mechanic->target_is_dst == TargetLocation::Destination ? new_player_dst : new_player_src;
 
 	if (!relevant_entry) return;
 
@@ -262,7 +262,7 @@ void Tracker::processMechanic(const cbtevent* ev, PlayerEntry* new_player_src, P
 
 	has_logged_mechanic = true;
 	
-	relevant_entry->addMechanicEntry(ev->time, new_mechanic, new_mechanic->boss);
+	relevant_entry->addMechanicEntry(ev->time, new_mechanic, new_mechanic->getBoss());
 }
 
 int Tracker::getElapsedTime(uint64_t const &current_time) noexcept

@@ -66,7 +66,7 @@ void LogEvent::bakeStr()
 	output += player ? player->name : "Unknown Player";
 
 	output += " ";
-	output += mechanic->name;
+	output += mechanic->getName();
 
 	if (value != 1)
 	{

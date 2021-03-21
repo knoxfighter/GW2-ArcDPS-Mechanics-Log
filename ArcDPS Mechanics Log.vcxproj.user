@@ -12,4 +12,15 @@
     <LocalDebuggerAttach>false</LocalDebuggerAttach>
     <LocalDebuggerCommandArguments>-autologin</LocalDebuggerCommandArguments>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <TargetName>d3d9_arcdps_mechanics</TargetName>
+    <SourcePath>E:\My Documents\Guild Wars 2\ArcDPS Mechanics Log\ArcDPS Mechanics Log\src;$(SourcePath)</SourcePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <TargetName>d3d9_arcdps_mechanics</TargetName>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <SourcePath>E:\My Documents\Guild Wars 2\ArcDPS Mechanics Log\ArcDPS Mechanics Log\src;$(SourcePath)</SourcePath>
+    <OutDir>C:\Program Files\Guild Wars 2\bin64\</OutDir>
+  </PropertyGroup>
 </Project>

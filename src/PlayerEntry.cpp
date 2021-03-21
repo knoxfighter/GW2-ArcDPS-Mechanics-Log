@@ -5,7 +5,7 @@ PlayerEntry::PlayerEntry(Player * new_player)
 	player = new_player;
 }
 
-void PlayerEntry::addMechanicEntry(uint64_t new_time, Mechanic * new_mechanic, Boss * new_boss)
+void PlayerEntry::addMechanicEntry(uint64_t new_time, Mechanic * new_mechanic, const Boss * new_boss)
 {
 	if (!new_mechanic) return;
 
@@ -35,7 +35,7 @@ void PlayerEntry::addMechanicEntry(uint64_t new_time, Mechanic * new_mechanic, B
 	}
 }
 
-void PlayerEntry::addPull(Boss * new_boss)
+void PlayerEntry::addPull(const Boss * new_boss)
 {
 	if (!player->in_squad) return;
 	if (!new_boss) return;

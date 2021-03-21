@@ -136,7 +136,7 @@ void AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWind
 			&& tracker->show_only_self)
 			continue;
 
-		if (!filter.passFilter(current_player,nullptr,nullptr,verbosity_all))
+		if (!filter.passFilter(current_player,nullptr,nullptr,Verbosity::All))
 			continue;
 
 		ImGui::Separator();
@@ -147,7 +147,7 @@ void AppChart::draw(Tracker* tracker, const char* title, bool* p_open, ImGuiWind
         {
 			if (!current_player_mechanics->isRelevant()) continue;
 			if (!current_player_mechanics->mechanic) continue;
-			if (!filter.passFilter(current_player, nullptr, current_player_mechanics->mechanic,verbosity_chart)) continue;
+			if (!filter.passFilter(current_player, nullptr, current_player_mechanics->mechanic,Verbosity::Chart)) continue;
 
             ImGui::Indent();
             ImGui::Text(current_player_mechanics->mechanic->getChartName().c_str());
@@ -291,14 +291,14 @@ void AppOptions::draw(Tracker* tracker, const char * title, bool * p_open, ImGui
 
 	ImGui::PushItemWidth(ImGui::GetWindowWidth()/3.0f);
 
-	Boss* previous_boss = nullptr;
+	const Boss* previous_boss = nullptr;
 
 	for (auto current_mechanic = getMechanics().begin(); current_mechanic != getMechanics().end(); ++current_mechanic)
 	{
-		if(previous_boss && previous_boss != current_mechanic->boss)
+		if(previous_boss && previous_boss != current_mechanic->getBoss())
 			ImGui::Separator();
 
-		ImGui::Combo(current_mechanic->getChartName().c_str(), &current_mechanic->verbosity,
+		ImGui::Combo(current_mechanic->getChartName().c_str(), (int*)&(current_mechanic->verbosity),
 			"Hidden\0"
 			"Chart Only\0"
 			"Log only\0"
@@ -309,7 +309,7 @@ void AppOptions::draw(Tracker* tracker, const char * title, bool * p_open, ImGui
 			ImGui::SameLine(); showHelpMarker(current_mechanic->description.c_str());
 		}
 
-		previous_boss = current_mechanic->boss;
+		previous_boss = current_mechanic->getBoss();
 	}
 	ImGui::PopItemWidth();
 

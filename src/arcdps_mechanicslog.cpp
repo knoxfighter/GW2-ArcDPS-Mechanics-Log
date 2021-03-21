@@ -5,6 +5,7 @@
 
 #include "arcdps_datastructures.h"
 #include "helpers.h"
+#include "bosses.h"
 #include "imgui_panels.h"
 #include "mechanics.h"
 #include "player.h"
@@ -458,9 +459,9 @@ void parseIni()
 	{
 		pszValue = mechanics_ini.GetValue("mechanic verbosity",
 			current_mechanic->getIniName().c_str(),
-			std::to_string(current_mechanic->verbosity).c_str());
+			std::to_string((int)current_mechanic->verbosity).c_str());
 		
-		current_mechanic->setVerbosity(std::stoi(pszValue));
+		current_mechanic->setVerbosity(static_cast<Verbosity>(std::stoi(pszValue)));
 	}
 	has_read_ini = true;
 }
@@ -480,11 +481,11 @@ void writeIni()
 
 	for (auto current_mechanic = getMechanics().begin(); current_mechanic != getMechanics().end(); ++current_mechanic)
 	{
-		if (current_mechanic->verbosity == 0) continue;//hide disabled mechanics
+		if (current_mechanic->verbosity == Verbosity::None) continue;//hide disabled mechanics
 		
 		rc = mechanics_ini.SetValue("mechanic verbosity",
 			current_mechanic->getIniName().c_str(),
-			std::to_string(current_mechanic->verbosity).c_str());
+			std::to_string((int)current_mechanic->verbosity).c_str());
 
 	}
 

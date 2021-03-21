@@ -7,7 +7,7 @@
 
 #include "player.h"
 #include "mechanics.h"
-#include "npc_ids.h"
+#include "bosses.h"
 #include "helpers.h"
 #include "LogEvent.h"
 #include "MechanicEntry.h"

@@ -36,7 +36,7 @@ bool MechanicFilter::isActive()
 	return filter_player.IsActive() || filter_boss.IsActive() || filter_mechanic.IsActive() || show_in_squad_only;
 }
 
-bool MechanicFilter::passFilter(Player* new_player, Boss* new_boss, Mechanic* new_mechanic, int new_display_section)
+bool MechanicFilter::passFilter(Player* new_player, const Boss* new_boss, Mechanic* new_mechanic, Verbosity new_display_section)
 {
 	if (new_player)
 	{
@@ -50,14 +50,14 @@ bool MechanicFilter::passFilter(Player* new_player, Boss* new_boss, Mechanic* ne
 	}
 	if (!show_all_mechanics)
 	{
-		if (new_mechanic && !(new_mechanic->verbosity & new_display_section)) return false;
+		if (new_mechanic && !((int)new_mechanic->verbosity & (int)new_display_section)) return false;
 	}
 	if (new_mechanic)
 	{
-		if (!filter_mechanic.PassFilter(new_mechanic->name.c_str())) return false;
-		if (new_mechanic->boss)
+		if (!filter_mechanic.PassFilter(new_mechanic->getName().c_str())) return false;
+		if (new_mechanic->getBoss())
 		{
-			if (!filter_boss.PassFilter(new_mechanic->boss->name.c_str())) return false;
+			if (!filter_boss.PassFilter(new_mechanic->getBoss()->name.c_str())) return false;
 		}
 	}
 	
@@ -70,9 +70,9 @@ bool MechanicFilter::passFilter(LogEvent* new_event)
 
 	Player* current_player = new_event->player;
 
-	Boss* current_boss = (new_event->mechanic ? new_event->mechanic->boss : nullptr);
+	const Boss* current_boss = (new_event->mechanic ? new_event->mechanic->getBoss() : nullptr);
 
 	Mechanic* current_mechanic = new_event->mechanic;
 
-	return passFilter(current_player, current_boss, current_mechanic,verbosity_log);
+	return passFilter(current_player, current_boss, current_mechanic,Verbosity::Log);
 }

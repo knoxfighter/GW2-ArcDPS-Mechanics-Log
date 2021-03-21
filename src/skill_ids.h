@@ -13,8 +13,8 @@ const uint32_t MECHANIC_SAB_FLAMEWALL = 31332;//Firestorm
 
 //slothasor
 const uint32_t MECHANIC_SLOTH_TANTRUM = 34479;//Tantrum
-const uint32_t MECHANIC_SLOTH_BOMB = 34387;//Volatile Poison
-const uint32_t MECHANIC_SLOTH_BOMB_AOE = 34481;//Volatile Poison
+const uint32_t MECHANIC_SLOTH_POISON = 34387;//Volatile Poison
+const uint32_t MECHANIC_SLOTH_POISON_AOE = 34481;//Volatile Poison
 const uint32_t MECHANIC_SLOTH_FLAME_BREATH = 34516;//nameless
 const uint32_t MECHANIC_SLOTH_SHAKE = 34482;//nameless
 const uint32_t MECHANIC_SLOTH_FIXATE = 34508;//Fixated
@@ -150,6 +150,38 @@ const uint32_t MECHANIC_ARKK_FEAR = 39442;//Blinding Radiance
 const uint32_t MECHANIC_ARKK_OVERHEAD_SMASH = 38844;//Overhead Smash
 const uint32_t MECHANIC_ARKK_BOMB = 38880;//Corporeal Reassignment
 const uint32_t MECHANIC_ARKK_GOOP = 39711;//unnamed,the projectile that spawns the goop
+
+//Boneskinner
+const uint32_t MECHANIC_BONESKINNER_CHARGE = 58851;
+const uint32_t MECHANIC_BONESKINNER_DEATH_WIND = 58546;
+
+//Kodan
+const uint32_t MECHANIC_KODAN_TRAP = 727;
+
+//Fraenir
+const uint32_t MECHANIC_FRAENIR_ICEQUAKE = 58811;
+const uint32_t MECHANIC_FRAENIR_ICE_SHOCK_WAVE = 58740;
+const uint32_t MECHANIC_FRAENIR_FROZEN = 58376;
+
+//Whisper
+const uint32_t MECHANIC_WHISPER_CHAINS = 59441;
+const uint32_t MECHANIC_WHISPER_OWN_ICE = 59102;
+const uint32_t MECHANIC_WHISPER_OTHER_ICE = 59468;
+const uint32_t MECHANIC_WHISPER_ICY_SLICE = 59076;
+const uint32_t MECHANIC_WHISPER_ICE_TEMPEST = 59255;
+const uint32_t MECHANIC_WHISPER_HAS_CHAINS = 59120;
+
+//Icebrood Construct
+const uint32_t MECHANIC_ICEBROOD_SHOCK_WAVE_DEADLY = 57832;
+const uint32_t MECHANIC_ICEBROOD_SHOCK_WAVE_1 = 57948;
+const uint32_t MECHANIC_ICEBROOD_SHOCK_WAVE_2 = 57472;
+const uint32_t MECHANIC_ICEBROOD_SHOCK_WAVE_3 = 57779;
+const uint32_t MECHANIC_ICEBROOD_ARM_SWING = 57516;
+const uint32_t MECHANIC_ICEBROOD_SHATTER = 57690;
+const uint32_t MECHANIC_ICEBROOD_CRYSTAL = 57663;
+const uint32_t MECHANIC_ICEBROOD_FLAIL_1 = 57678;
+const uint32_t MECHANIC_ICEBROOD_FLAIL_2 = 57463;
+
 
 //Buffs
 const uint32_t BUFF_STABILITY = 1122;//Stability

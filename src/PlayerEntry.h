@@ -23,8 +23,8 @@ struct PlayerEntry
 
 	bool operator==(uintptr_t other_id) { return player && *player == other_id; };
 	bool operator==(std::string other_str) { return player && *player == other_str; };
-	void addMechanicEntry(uint64_t new_time, Mechanic* new_mechanic, Boss* new_boss);
-	void addPull(Boss* new_boss);
+	void addMechanicEntry(uint64_t new_time, Mechanic* new_mechanic, const Boss* new_boss);
+	void addPull(const Boss* new_boss);
 	int getMechanicsTotal();
 	uint64_t getLastMechanicHitTime(uint32_t new_mechanic);
 

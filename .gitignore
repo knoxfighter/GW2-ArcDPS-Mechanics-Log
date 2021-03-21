@@ -7,4 +7,6 @@
 /*.cscope_file_list
 /x64
 /.vs
+/Debug
 *.aps
+ArcDPS Mechanics Log.vcxproj.user
