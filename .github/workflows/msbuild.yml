@@ -36,6 +36,5 @@ jobs:
     - name: Upload Artifact
       uses: actions/upload-artifact@v1.0.0
       with:
-        name: published_webapp
-        path: x64\Release\d3d9_arcdps_mechanics.dll
-        
+        name: d3d9_arcdps_mechanics.dll
+        path: x64\Release\ArcDPS Mechanics Log.dll
