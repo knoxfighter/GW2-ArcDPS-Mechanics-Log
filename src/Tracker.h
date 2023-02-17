@@ -10,6 +10,7 @@
 #include "npc_ids.h"
 #include "helpers.h"
 #include "LogEvent.h"
+#include "Log.h"
 #include "MechanicEntry.h"
 #include "PlayerEntry.h"
 

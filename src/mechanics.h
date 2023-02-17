@@ -6,6 +6,7 @@
 
 #include "arcdps_datastructures.h"
 #include "player.h"
+#include "Log.h"
 #include "skill_ids.h"
 #include "npc_ids.h"
 #include "helpers.h"

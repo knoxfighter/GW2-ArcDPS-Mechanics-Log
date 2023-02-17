@@ -349,10 +349,13 @@ bool requirementOnSelfRevealedInHarvestTemple(const Mechanic& current_mechanic, 
 							   ag* ag_src, ag* ag_dst, Player* player_src,
 							   Player* player_dst, Player* current_player)
 {
-	
 	if (!ev) return false;
 	// In Harvest Temple
-	if (!current_player->current_log_npc || *current_player->current_log_npc != 43488) return false;
+	if (!current_player->current_log_npc || *current_player->current_log_npc != 43488)
+	{
+		LOG("ignoring revealed because log npc is %llu", *current_player->current_log_npc);
+		return false;
+	}
 	// Applying to self
 	if (ev->src_instid != ev->dst_instid) return false;
 	// Applying, not removing

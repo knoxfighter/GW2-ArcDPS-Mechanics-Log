@@ -80,12 +80,14 @@ bool Tracker::addPlayer(ag* src, ag* dst)
 
 	if (!new_entry)
 	{
+		LOG("Added %s (%s) for tracking", name, account);
 		players.push_back(Player(name, account, id, is_self));
 		players.back().current_log_npc = &current_log_npc;
 		player_entries.push_back(PlayerEntry(&players.back()));
 	}
 	else//player tracked
 	{
+		LOG("Updating %s (%s) for tracking", name, account);
 		new_entry->player->id = id;
 		new_entry->player->name = name;
 		new_entry->player->in_squad = true;
@@ -114,6 +116,7 @@ bool Tracker::removePlayer(const ag* src)
 	}
 	else
 	{
+		LOG("Removing %s from tracking", name);
 		new_entry->player->in_squad = false;
 		return true;
 	}
@@ -122,7 +125,8 @@ bool Tracker::removePlayer(const ag* src)
 void Tracker::addPull(Boss* boss)
 {
 	if (!boss) return;
-	
+
+	LOG("Adding pull for %s", boss->name.c_str());
 	boss->pulls++;
 
 	for (auto current_entry = player_entries.begin(); current_entry != player_entries.end(); ++current_entry)
@@ -176,6 +180,7 @@ void Tracker::processCombatEnter(const cbtevent* ev, ag* new_agent)
 	PlayerEntry* new_entry = nullptr;
 	if (new_entry = getPlayerEntry(new_agent))
 	{
+		LOG("%s entered combat", new_entry->player->name.c_str());
 		Player* new_player = new_entry->player;
 
 		new_entry->combatEnter();
@@ -220,6 +225,7 @@ void Tracker::processCombatEnter(const cbtevent* ev, ag* new_agent)
 			if ((*current_boss)->hasId(new_agent->prof))
 			{
 				boss_data = *current_boss;
+				LOG("%s set as current boss", boss_data->name.c_str());
 			}
 		}
 	}
@@ -230,12 +236,14 @@ void Tracker::processCombatExit(const cbtevent* ev, ag* new_agent)
 	PlayerEntry* new_entry = nullptr;
 	if (new_entry = getPlayerEntry(new_agent))
 	{
+		LOG("%s exited combat", new_entry->player->name.c_str());
 		Player* new_player = new_entry->player;
 
 		new_entry->combatExit();
 
 		if (getPlayerNumInCombat() == 0)
 		{
+			LOG("No one in squad in combat, resetting boss");
 			addPull(boss_data);
 			boss_data = nullptr;
 			current_log_npc = 0;
@@ -245,6 +253,7 @@ void Tracker::processCombatExit(const cbtevent* ev, ag* new_agent)
 
 void Tracker::processLogNpcUpdate(uint64_t species_id)
 {
+	LOG("LogNPCUpdate: %llu", species_id);
 	current_log_npc = species_id;
 }
 
