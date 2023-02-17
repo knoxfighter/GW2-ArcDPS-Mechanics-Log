@@ -122,7 +122,7 @@ Boss boss_minister_li = Boss()
                                 // TheMindbladeCM
                                 25280,
                             });
-Boss boss_the_dragonvoid = Boss().setName("The Dragonvoid").setIds({43488});
+Boss boss_the_dragonvoid = Boss().setName("The Dragonvoid").setIds({24375, 43488});
 Boss boss_watchknight_triumvirate = Boss()
                                         .setName("Watchknight Triumvirate")
                                         .setIds({

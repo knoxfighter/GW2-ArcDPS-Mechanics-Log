@@ -351,7 +351,7 @@ bool requirementOnSelfRevealedInHarvestTemple(const Mechanic& current_mechanic, 
 {
 	if (!ev) return false;
 	// In Harvest Temple
-	if (!current_player->current_log_npc || *current_player->current_log_npc != 43488)
+	if (!current_player->current_log_npc || !current_mechanic.boss->hasId(*current_player->current_log_npc))
 	{
 		LOG("ignoring revealed because log npc is %llu", *current_player->current_log_npc);
 		return false;
