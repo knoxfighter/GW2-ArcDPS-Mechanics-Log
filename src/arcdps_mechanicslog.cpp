@@ -94,20 +94,6 @@ extern "C" __declspec(dllexport) void* get_release_addr() {
 /* initialize mod -- return table that arcdps will use for callbacks */
 arcdps_exports* mod_init()
 {
-#ifdef _DEBUG
-	AllocConsole();
-	SetConsoleOutputCP(CP_UTF8);
-
-	/* big buffer */
-	char buff[4096];
-	char* p = &buff[0];
-	p += _snprintf(p, 400, "==== mod_init ====\n");
-
-	/* print */
-	DWORD written = 0;
-	HANDLE hnd = GetStdHandle(STD_OUTPUT_HANDLE);
-	WriteConsoleA(hnd, &buff[0], (DWORD)(p - &buff[0]), &written, 0);
-#endif
 	/* for arcdps */
 	memset(&arc_exports, 0, sizeof(arcdps_exports));
 	arc_exports.sig = 0x81004122;//from random.org
@@ -129,9 +115,6 @@ arcdps_exports* mod_init()
 /* release mod -- return ignored */
 uintptr_t mod_release()
 {
-#ifdef _DEBUG
-	FreeConsole();
-#endif
 	if(tracker.export_chart_on_close) chart_ui.writeToDisk(&tracker);
 	tracker.resetAllPlayerStats();
 	writeIni();
