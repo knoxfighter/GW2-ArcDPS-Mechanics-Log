@@ -50,7 +50,7 @@ struct Mechanic
 	bool fail_if_hit = true;//mechanic is "failed" if hit (setting this to false makes it neutral in chart)
 	bool valid_if_down = false;//mechanic counts if player is in down-state
 
-	bool is_combat_buff = false; //required for new combat buff which are not automatic whitelisted in arcdps combat api.
+	bool is_combat_buff = false; //required for new combat buff which are not whitelisted in arcdps combat api.
 	bool is_double_used = false; //mechanic is doubled registered under different name.
 
 	/*
