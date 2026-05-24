@@ -7,8 +7,8 @@ typedef struct arcdps_exports {
 	uintptr_t size; /* size of exports table */
 	uint32_t sig; /* pick a number between 0 and uint32_t max that isn't used by other modules */
 	uint32_t imguivers; /* set this to IMGUI_VERSION_NUM. if you don't use imgui, 18000 (as of 2021-02-02) */
-	char* out_name; /* name string */
-	char* out_build; /* build string */
+	const char* out_name; /* name string */
+	const char* out_build; /* build string */
 	void* wnd_nofilter; /* wndproc callback, fn(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam) */
 	void* combat; /* combat event callback, fn(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t id, uint64_t revision) */
 	void* imgui; /* id3dd9::present callback, before imgui::render, fn(uint32_t not_charsel_or_loading) */
