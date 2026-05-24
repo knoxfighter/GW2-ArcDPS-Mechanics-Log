@@ -395,6 +395,11 @@ bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag*
 		return false;
 	}
 	
+	if (kela_bee_first_touch_time == ev->time)
+	{
+		return true;
+	}
+	
 	if ((ev->time - kela_bee_first_touch_time) > current_mechanic.frequency_player) 
 	{
 		kela_bee_first_touch_time = ev->time;
