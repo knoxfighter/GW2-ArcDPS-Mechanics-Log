@@ -90,9 +90,9 @@ int64_t Mechanic::isValidHit(cbtevent* ev, ag* ag_src, ag* ag_dst, Player * play
 		return false;
 	}
 
-	if (ev->is_buffremove != is_buffremove)
+	if (ev->is_buffremove != is_buffremove && !is_combat_buff)
 	{
-		if (!is_combat_buff) return false;
+		return false;
 	}
 
 	if (is_activation)
@@ -389,21 +389,20 @@ bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, c
 
 bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
-	static KelaBees* kela_bees = nullptr;
+	static uint64_t kela_bee_first_touch_time = 0;
 	if (!ev) return false;
 	if (ev->is_statechange == CBTS_BUFFREMOVE_SINGLE || ev->is_statechange == CBTS_BUFFREMOVE_ALL) return false;
 	
 	//First Bees ever
-	if (!kela_bees)
+	if (kela_bee_first_touch_time == 0)
 	{
-		kela_bees = new KelaBees();
-		kela_bees->first_touch_time = ev->time;
+		kela_bee_first_touch_time = ev->time;
 		return true;
 	}
 	
-	if ((ev->time - kela_bees->first_touch_time) > current_mechanic.frequency_player) 
+	if ((ev->time - kela_bee_first_touch_time) > current_mechanic.frequency_player) 
 	{
-		kela_bees->first_touch_time = ev->time;
+		kela_bee_first_touch_time = ev->time;
 		return true;
 	}
 	return false;
@@ -444,9 +443,7 @@ bool requirementKnockdownFromCroc(const Mechanic& current_mechanic, cbtevent* ev
 							 ag* ag_src, ag* ag_dst, Player* player_src,
 							 Player* player_dst, Player* current_player)
 {
-	if (!requirementSpecificBoss(current_mechanic, ev, ag_src, ag_dst, player_src, player_dst, current_player)) return false;
-	if (ag_src->prof != 27124) return true; //Knockdown from Crocodilian Razortooth
-	return false;
+	return requirementSpecificBoss(current_mechanic, ev, ag_src, ag_dst, player_src, player_dst, current_player) && ag_src->prof != 27124;
 }
 
 bool requirementRevealedFromDagda(const Mechanic& current_mechanic, cbtevent* ev,
