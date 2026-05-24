@@ -270,7 +270,7 @@ void Tracker::processMechanic(const cbtevent* ev, PlayerEntry* new_player_src, P
 
 	if (!relevant_entry) return;
 
-	if (new_mechanic->is_multihit && ev->time < (new_mechanic->is_double_used ? relevant_entry->getLastMechanicHitTime( new_mechanic->name) + new_mechanic->frequency_player : relevant_entry->getLastMechanicHitTime(new_mechanic->ids[0]) + new_mechanic->frequency_player))
+	if (new_mechanic->is_multihit && ev->time < (new_mechanic->is_double_used ? relevant_entry->getLastMechanicHitTime( new_mechanic->name)  : relevant_entry->getLastMechanicHitTime(new_mechanic->ids[0])) + new_mechanic->frequency_player)
 	{
 		return;
 	}

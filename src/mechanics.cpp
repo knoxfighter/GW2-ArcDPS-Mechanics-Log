@@ -389,15 +389,10 @@ bool requirementDecimaExposedChorusOfThunder(const Mechanic& current_mechanic, c
 
 bool requirementKelaFirstBee(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)
 {
-	static uint64_t kela_bee_first_touch_time = 0;
-	if (!ev) return false;
-	if (ev->is_statechange == CBTS_BUFFREMOVE_SINGLE || ev->is_statechange == CBTS_BUFFREMOVE_ALL) return false;
-	
-	//First Bees ever
-	if (kela_bee_first_touch_time == 0)
+	static uint64_t kela_bee_first_touch_time = ev->time;
+	if (!ev || ev->is_statechange == CBTS_BUFFREMOVE_SINGLE || ev->is_statechange == CBTS_BUFFREMOVE_ALL)
 	{
-		kela_bee_first_touch_time = ev->time;
-		return true;
+		return false;
 	}
 	
 	if ((ev->time - kela_bee_first_touch_time) > current_mechanic.frequency_player) 
