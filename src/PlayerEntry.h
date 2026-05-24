@@ -20,14 +20,14 @@ struct PlayerEntry
 	uint64_t last_hit_time = 0;       //time player was last hit with a mechanic
 
 	PlayerEntry(Player* new_player);
-
+	
 	bool operator==(uintptr_t other_id) { return player && *player == other_id; };
-	bool operator==(std::string other_str) { return player && *player == other_str; };
+	bool operator==(std::string_view other_str) { return player && player->account == other_str; }
 	void addMechanicEntry(uint64_t new_time, Mechanic* new_mechanic, Boss* new_boss);
 	void addPull(Boss* new_boss);
 	int getMechanicsTotal();
 	uint64_t getLastMechanicHitTime(uint32_t new_mechanic);
-	uint64_t getLastMechanicHitTimeWithName(std::string new_mechanic_name);
+	uint64_t getLastMechanicHitTime(std::string_view new_mechanic_name);
 
 	void down();
 	void dead();

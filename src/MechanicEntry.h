@@ -21,7 +21,7 @@ public:
 
 
 	bool operator==(uint32_t other_id) { return mechanic && mechanic->ids[0] == other_id; };
-	bool operator==(std::string other_name) {return mechanic && mechanic->name == other_name; };
+	bool operator==(std::string_view other_name) {return mechanic && mechanic->name == other_name; };
 	std::string toString();
 	void addPull(const Boss* new_boss);
 	bool isRelevant();
