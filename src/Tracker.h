@@ -53,5 +53,5 @@ public:
 	void processLogNpcUpdate(uint64_t species_id);
 	void processMechanic(const cbtevent* ev, PlayerEntry* new_player_src, PlayerEntry* new_player_dst, Mechanic* new_mechanic, int64_t value);
 
-	int Tracker::getElapsedTime(uint64_t const &current_time) noexcept;
+	int getElapsedTime(uint64_t const &current_time) noexcept;
 };
