@@ -310,17 +310,17 @@ uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t i
 			int64_t value = 0;
 			current_entry = tracker.getPlayerEntry(src);
 			PlayerEntry* other_entry = tracker.getPlayerEntry(dst);
-			for(uint16_t index=0;index<getMechanics().size();index++)
+			for (auto& mechanic : getMechanics())
 			{
-				if(value = getMechanics()[index].isValidHit(ev, src, dst,
+				if (value = mechanic.isValidHit(ev, src, dst,
 					(current_entry ? current_entry->player : nullptr), //check for null before getting player object
 					(other_entry ? other_entry->player: nullptr)))
 				{
-					if (getMechanics()[index].is_combat_buff && ev->is_statechange == CBTS_BUFFAPPLY)
+					if (mechanic.is_combat_buff && ev->is_statechange == CBTS_BUFFAPPLY)
 					{
-						getMechanics()[index].is_combat_buff = false;
+						mechanic.is_combat_buff = false;
 					}
-					tracker.processMechanic(ev, current_entry, other_entry, &getMechanics()[index], value);
+					tracker.processMechanic(ev, current_entry, other_entry, &mechanic, value);
 					log_ui.scroll_to_bottom = true;
 				}
 			}
