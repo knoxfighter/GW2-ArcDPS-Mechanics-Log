@@ -26,7 +26,7 @@ arcdps_exports* mod_init();
 uintptr_t mod_release();
 uintptr_t mod_wnd(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t id, uint64_t revision);
-uintptr_t mod_imgui(uint32_t not_charsel_or_loading);
+uintptr_t mod_imgui(uint32_t not_charsel_or_loading, uint32_t hide_if_combat_or_ooc);
 uintptr_t mod_options_end();
 uintptr_t mod_options_windows(const char* windowname);
 
@@ -347,11 +347,11 @@ void ShowMechanicsChart(bool* p_open)
 	}
 }
 
-uintptr_t mod_imgui(uint32_t not_charsel_or_loading)
+uintptr_t mod_imgui(uint32_t not_charsel_or_loading, uint32_t hide_if_combat_or_ooc)
 {
 	readArcExports();
 	
-	if (!not_charsel_or_loading) return 0;
+	if (!arc_panel_always_draw && (!not_charsel_or_loading || hide_if_combat_or_ooc)) return 0;
 
 	auto const io = &ImGui::GetIO();
 
