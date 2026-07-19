@@ -449,7 +449,10 @@ void parseIni()
 
 	pszValue = mechanics_ini.GetValue("log", "max_mechanics", std::to_string(tracker.max_log_events).c_str());
 	tracker.max_log_events = std::stoi(pszValue);
-
+	
+	pszValue = mechanics_ini.GetValue("log", "max_display_name_length", std::to_string(tracker.max_display_name_length).c_str());
+	tracker.max_display_name_length = std::stoi(pszValue);
+	
 	pszValue = mechanics_ini.GetValue("chart", "export_on_close", "1");
 	tracker.export_chart_on_close = std::stoi(pszValue);
 
@@ -475,6 +478,7 @@ void writeIni()
 	
 	rc = mechanics_ini.SetValue("general", "self_only", std::to_string(tracker.show_only_self).c_str());
 	rc = mechanics_ini.SetValue("log", "max_mechanics", std::to_string(tracker.max_log_events).c_str());
+	rc = mechanics_ini.SetValue("log", "max_display_name_length", std::to_string(tracker.max_display_name_length).c_str());
 	rc = mechanics_ini.SetValue("chart", "export_on_close", std::to_string(tracker.export_chart_on_close).c_str());
 
 	for (auto current_mechanic = getMechanics().begin(); current_mechanic != getMechanics().end(); ++current_mechanic)

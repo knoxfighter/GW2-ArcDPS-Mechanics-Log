@@ -25,6 +25,7 @@ public:
 	
 	std::list<LogEvent> log_events;
 	int max_log_events = 300;
+	int max_display_name_length = 100;
 	
 	bool show_only_self = false;
 	bool export_chart_on_close = true;
