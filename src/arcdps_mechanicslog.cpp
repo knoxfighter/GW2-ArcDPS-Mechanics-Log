@@ -316,10 +316,10 @@ uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t i
 					(current_entry ? current_entry->player : nullptr), //check for null before getting player object
 					(other_entry ? other_entry->player: nullptr)))
 				{
-					if (mechanic.is_combat_buff && ev->is_statechange == CBTS_BUFFAPPLY)
+					/*if (mechanic.is_combat_buff && ev->is_statechange == CBTS_BUFFAPPLY)
 					{
 						mechanic.is_combat_buff = false;
-					}
+					}*/
 					tracker.processMechanic(ev, current_entry, other_entry, &mechanic, value);
 					log_ui.scroll_to_bottom = true;
 				}

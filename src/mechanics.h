@@ -50,8 +50,8 @@ struct Mechanic
 	bool fail_if_hit = true;//mechanic is "failed" if hit (setting this to false makes it neutral in chart)
 	bool valid_if_down = false;//mechanic counts if player is in down-state
 
-	bool is_combat_buff = false; //required for new combat buff which are not whitelisted in arcdps combat api.
-	bool is_double_used = false; //mechanic is doubled registered under different name.
+	//Non working in current version: bool is_combat_buff = false; //required for new combat buff which are not whitelisted in arcdps combat api.
+	//Non working in current version: bool is_double_used = false; //mechanic is doubled registered under different name.
 
 	/*
 	If the attack is successfully evaded/blocked/invulned, arcdps will say such.
@@ -103,8 +103,8 @@ struct Mechanic
 	Mechanic setCanBlock(bool const new_can_block) { this->can_block = new_can_block; return *this; }
 	Mechanic setCanInvuln(bool const new_can_invuln) { this->can_invuln = new_can_invuln; return *this; }
 	Mechanic setVerbosity(int const new_verbosity) { this->verbosity = new_verbosity; return *this; }
-	Mechanic setIsCombatBuff(bool const new_is_combat_buff) {this->is_combat_buff = new_is_combat_buff; return *this; }
-	Mechanic setIsDoubleUsed(bool const new_is_double_used) {this->is_double_used = new_is_double_used; return *this; }
+	//Mechanic setIsCombatBuff(bool const new_is_combat_buff) {this->is_combat_buff = new_is_combat_buff; return *this; }
+	//Mechanic setIsDoubleUsed(bool const new_is_double_used) {this->is_double_used = new_is_double_used; return *this; }
 
     Mechanic setSpecialRequirement(bool (*new_special_requirement)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)) {this->special_requirement = new_special_requirement; return *this;}
     Mechanic setSpecialReturnValue(int64_t(*new_special_value)(const Mechanic &current_mechanic, cbtevent* ev, ag* ag_src, ag* ag_dst, Player * player_src, Player * player_dst, Player* current_player)) {this->special_value = new_special_value; return *this;}
