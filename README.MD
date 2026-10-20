@@ -14,7 +14,7 @@ Here are some example screenshots (with names redacted):
 # Known Issues:
 - ~~Clearing the mechanics chart breaks the chart https://github.com/MerlinAesalon/GW2-ArcDPS-Mechanics-Log/issues/4~~ Clearing Chart reset stats now, doesnt remove players not in squad.
 - Sunqua Peak Fractal mechanics are not complete, some are still missing.
-- Kela Biting Swarm (Bees) wont work on first pull.
+- Striked through mechanics do not work in current version to be fixed in future.
 
 Since i updated to a new imgui version, some graphic glitches could occur (overlapping text/elements also count). Please report them, so i can fix them.
 
@@ -27,7 +27,7 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - egg
   - touching an orb
 - Sabetha
-  - time bombs
+  - ~~time bombs~~
   - sapper bombs
   - standing in cannon fire
 - Slothasor
@@ -36,26 +36,26 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - standing in bomb AoE
   - flame breath
   - shake
-  - fixate
+  - ~~fixate~~
 - Bandit Trio
   - throwing bees
   - throwing oils
 - Matthias
   - reflecting shards (that grant Matthias a damage buff)
-  - corruption (to fountain)
-  - bomb (to wall)
-  - sacrifice
+  - ~~corruption (to fountain)~~
+  - ~~bomb (to wall)~~
+  - ~~sacrifice~~
   - touching a ghost
   - fire tornado
   - storm cloud
 - Keep Construct
-  - fixate
+  - ~~fixate~~
   - touching the core
 - Xera
   - triggering orb explosion
   - standing in orb AoE (after orb explosion)
-  - magic
-  - teleport
+  - ~~magic~~
+  - ~~teleport~~
 - Cairn
   - teleport
   - missing a green circle
@@ -64,47 +64,47 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - shockwave
   - slap
   - bludgeon (vertical smack during last 33%)
-  - fixate
+  - ~~fixate~~
 - Deimos
   - oil
   - smash
-  - picking up a tear
-  - teleport (having the green circle)
+  - ~~picking up a tear~~
+  - ~~teleport (having the green circle)~~
 - Soulless Horror
   - standing in the inner/outer ring (the attack avoided for Necro Dancer)
   - standing in torment aoe
   - standing in pie slices
   - touching a scythe
   - taking fixation
-  - gaining the tanking damage debuff
-  - CCing a Tormented Dead
+  - ~~gaining the tanking damage debuff~~
+  - ~~CCing a Tormented Dead~~
 - Soul Eater
   - puke
   - spider webs
-  - picking up an orb
+  - ~~picking up an orb~~
   - throwing an orb
 - Broken King
   - getting a green
 - Eye Cave
-  - CCing the eyes
+  - ~~CCing the eyes~~
 - Dhuum
   - touching a messenger
-  - getting affliction
+  - ~~getting affliction~~
   - affliction explosion damage
   - shackles
   - cracks
   - dip aoe
   - touching center during suction
   - cone
-  - snatch (on CM)
+  - ~~snatch (on CM)~~
 - Conjured Amalgamate
   - squash (arm slamming down on player)
   - using swords/shields
 - Twin Largos
   - shockwave
-  - waterlogged stacks
-  - bubble
-  - getting a tidal pool
+  - ~~waterlogged stacks~~
+  - ~~bubble~~
+  - ~~getting a tidal pool~~
   - standing in whirlpool
   - geyser
   - boon steal
@@ -115,7 +115,7 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - teleport
   - being inside the hitbox
 - Adina (Earth Djinn)
-  - was blinded
+  - ~~was blinded~~
   - looked at eye
   - touched pillar ripple
   - touched a mine
@@ -131,7 +131,7 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - purple rectangle
 - Greer, the Blightbringer
   - wave of corruption
-  - blob of blight hit and targeted.
+  - blob of blight hit and ~~targeted~~.
   - ripples of rot (jump)
   - cage of decay (arrows)
 - Decima, the Stormsinger
@@ -178,11 +178,11 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - shockwave attack
   - stood in puddle
   - yellow circle
-  - exposed buff
-  - green target
-  - green debuff
-  - green
-  - bomb
+  - ~~exposed buff~~
+  - ~~green target~~
+  - ~~green debuff~~
+  - ~~green~~
+  - ~~bomb~~
 - Ankka
   - hands Aoe
   - pull Aoe
@@ -194,17 +194,17 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - burst
   - rush
   - bomb
-  - green target
+  - ~~green target~~
   - flames
   - red circles overlapped hit
-  - fixated
+  - ~~fixated~~
   - bladestorm
   - big laser
-  - debilitated stack
-  - infirmity stack
-  - exposed stack
+  - ~~debilitated stack~~
+  - ~~infirmity stack~~
+  - ~~exposed stack~~
 - Harvest Temple
-  - void debuff
+  - ~~void debuff~~
   - jormag breath
   - primordus slam
   - crystal barrage
@@ -221,15 +221,32 @@ Since i updated to a new imgui version, some graphic glitches could occur (overl
   - orb collection
 - Dagda
   - target soul feast
-  - target numbers
+  - ~~target numbers~~
   - demonic blast
   - green target
 - Kela
   - sclading wave
   - tornado cc
-  - biting swarm
+  - ~~biting swarm~~
   - lightning strike cc
   - tackle
+- Vloxx
+  - Cosmic Charge
+  - Annihilating Orb  
+  - Annihilating Orb Shockwave without stability
+  - Slice Through Reality
+  - Thousand Strikes
+  - Worldpiercer
+  - Echoing Blade
+  - Excision Extremis
+  - Raging Storm
+  - Float up by Visions of Eternity (Only with no stability)
+  - Probability Distribution
+  - Division Eternal
+  - Judgement of Eternity
+  - Surrounding Curse
+  - Eternal Reflection
+  - Ascension's Sacrifice
 - Icebrood Construct
   - Ice Arm Swing
   - Ice Shatter (Ice Orbs)
@@ -339,10 +356,6 @@ A: Yes. I’ve talked to Chris Cleary from Anet and he did not see any issues wi
 
 ### Mathias
 - If a player has a magnetic aura, reflecting distortion, etc and reflects a shard on Matthias, it will say the player with the buff reflected and not the player that granted the buff.
-
-### Kela - Biting swarm(Bees)
-- It wont work on the first pull after game start.
-- First biting swarm and biting swarm is not shown in detail on the chart. It counts all instances together and either says it is first biting swarm or biting swarm.
 
 Send bug reports, feedback, hate mail, etc in a new issue here or join the [Elite Insights discord](https://discord.gg/dCDEPXx) and write in the channel #mechanics-log.
 
