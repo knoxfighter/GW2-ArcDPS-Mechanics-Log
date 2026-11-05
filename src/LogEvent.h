@@ -15,11 +15,11 @@ public:
 	int64_t value = 1;
 	cbtevent ev;
 
-	LogEvent(Player* new_player, Mechanic* new_mechanic, uint64_t new_time, uint64_t new_time_absolute, int64_t new_value, const cbtevent* new_ev);
+	LogEvent(Player* new_player, Mechanic* new_mechanic, uint64_t new_time, uint64_t new_time_absolute, int64_t new_value, const cbtevent* new_ev, int max_display_name_length);
 
 	void draw();
 	void drawTooltip();
-	void bakeStr();
+	void bakeStr(int max_display_name_length);
 	bool isPlaceholder();
 	std::string getFilterText();
 };
