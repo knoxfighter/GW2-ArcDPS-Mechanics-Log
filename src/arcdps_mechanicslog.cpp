@@ -451,7 +451,7 @@ void parseIni()
 	tracker.max_log_events = std::stoi(pszValue);
 	
 	pszValue = mechanics_ini.GetValue("log", "max_display_name_length", std::to_string(tracker.max_display_name_length).c_str());
-	tracker.max_display_name_length = std::stoi(pszValue);
+	tracker.max_display_name_length = max(std::stoi(pszValue), -1);
 	
 	pszValue = mechanics_ini.GetValue("chart", "export_on_close", "1");
 	tracker.export_chart_on_close = std::stoi(pszValue);

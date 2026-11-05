@@ -288,7 +288,10 @@ void AppOptions::draw(Tracker* tracker)
 
 		ImGui::InputInt("Max mechanics in log", &tracker->max_log_events, 25);
 		
-		ImGui::InputInt("Max display name length", &tracker->max_display_name_length, 1);
+		if (ImGui::InputInt("Max display name length", &tracker->max_display_name_length, 1))
+		{
+			tracker->max_display_name_length = max (tracker->max_display_name_length, -1);
+		}
 
 		ImGui::Checkbox("Export chart to CSV when game is closed", &tracker->export_chart_on_close);
 
