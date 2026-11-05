@@ -197,6 +197,31 @@ Boss boss_kela_seneschal_of_waves = Boss()
 										  	27670
 										  });
 
+Boss boss_vloxx = Boss()
+						.setName("Vloxx")
+						.setIds({
+							//Vloxx
+							28106,
+							//Champion Aspect of the Staff
+							28017,
+							//Champion Aspect of the Spear
+							28033,
+							//Champion Aspect of the Sword
+							28107,
+							//Cosmic Bulwark
+							27934,
+							//Cosmic Piercer
+							27958,
+							//Something Cosmic Piercer
+							28056,
+							//Cosmic Sunderer
+							27933,
+							//Elite Cosmic Piercer
+							27929,
+							//Elite Cosmic Bullwark
+							28065
+						});
+
 std::list<Boss*> bosses =
 {
 	&boss_generic,
@@ -247,5 +272,6 @@ std::list<Boss*> bosses =
 	&boss_greer,
 	&boss_decima,
     &boss_ura,
-	&boss_kela_seneschal_of_waves
+	&boss_kela_seneschal_of_waves,
+	&boss_vloxx
 };

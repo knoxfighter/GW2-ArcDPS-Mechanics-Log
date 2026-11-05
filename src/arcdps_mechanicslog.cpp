@@ -305,7 +305,7 @@ uintptr_t mod_combat(cbtevent* ev, ag* src, ag* dst, char* skillname, uint64_t i
 
 		}
 
-		if(ev->result != CBTR_INTERRUPT && ev->result != CBTR_BLIND)
+		if(ev->result != CBTR_INTERRUPT && ev->result != CBTR_BLIND && ev->result != CBTR_KILLINGBLOW && ev->result != CBTR_DOWNED)
 		{
 			int64_t value = 0;
 			current_entry = tracker.getPlayerEntry(src);
